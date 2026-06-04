@@ -1,0 +1,202 @@
+/* Curriculum.css */
+.curriculum-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.curriculum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.page-subtitle {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+.weeks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.week-card {
+  padding: 20px;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.week-card:hover {
+  border-color: var(--teal-400);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(197, 160, 89, 0.08);
+  transform: translateY(-1px);
+}
+
+.week-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.week-card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.week-number-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--teal-400); /* Royal Gold brand color */
+  text-transform: uppercase;
+}
+
+.week-title {
+  font-size: 16px;
+  font-weight: 550;
+  color: var(--text-1);
+}
+
+.week-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.week-description {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.week-section {
+  margin-top: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.week-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.objectives-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.objectives-list li {
+  font-size: 12.5px;
+  color: var(--text-2);
+  position: relative;
+  padding-left: 16px;
+  line-height: 1.5;
+}
+
+.objectives-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: var(--teal-400); /* Gold bullet points */
+  font-weight: bold;
+}
+
+.linked-missions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.no-missions-label {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+/* Modal Selector Grid */
+.missions-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.mission-selector-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.12s;
+}
+
+.mission-selector-item:hover {
+  background: var(--gray-100);
+}
+
+.mission-selector-item input[type="checkbox"] {
+  accent-color: var(--teal-400);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.mission-selector-label {
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Media styling for week cards */
+.week-media-container {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.week-media-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.week-media-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+

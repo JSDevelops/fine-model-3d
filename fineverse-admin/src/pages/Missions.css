@@ -1,0 +1,45 @@
+/* Missions.css */
+.missions-page { display: flex; flex-direction: column; gap: 14px; }
+
+.page-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.filters { display: flex; gap: 8px; }
+
+.missions-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.missions-table th {
+  text-align: left; padding: 10px 14px;
+  font-size: 11px; font-weight: 500; color: var(--text-3);
+  border-bottom: 1px solid var(--border);
+  background: var(--gray-50);
+}
+.missions-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.missions-table tr:last-child td { border-bottom: none; }
+.missions-table tr:hover td { background: var(--gray-50); }
+.center-cell { text-align: center; }
+
+.mission-name-cell { display: flex; align-items: center; gap: 10px; }
+.mission-icon-sm {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--teal-50);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal-600); font-size: 14px;
+  flex-shrink: 0;
+}
+.mission-name { font-weight: 500; }
+.mission-desc { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.scene-label  { font-size: 12px; color: var(--text-2); }
+
+.completion-cell { display: flex; align-items: center; gap: 8px; min-width: 100px; }
+.completion-pct { font-size: 11px; font-weight: 500; min-width: 28px; }
+
+.row-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+.missions-table tr:hover .row-actions { opacity: 1; }
+
+.mission-form .form-section-title {
+  font-size: 10px; font-weight: 500; color: var(--text-3);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding-bottom: 6px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}

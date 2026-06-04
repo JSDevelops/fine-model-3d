@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+fineverse-admin/node_modules/
+fineverse-student/node_modules/
+
+# Build output
+fineverse-admin/dist/
+fineverse-student/dist/
+
+# Vite cache
+.vite/
+fineverse-admin/.vite/
+fineverse-student/.vite/
+
+# Env files — never commit real keys
+.env
+.env.local
+.env.production
+fineverse-admin/.env*
+fineverse-student/.env*
+
+# Editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*

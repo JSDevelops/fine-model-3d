@@ -1,0 +1,69 @@
+/* ── FINEVERSE Admin — Global Styles ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Gold brand (formerly Teal) */
+  --teal-50:  rgba(197, 160, 89, 0.08);
+  --teal-100: rgba(197, 160, 89, 0.20);
+  --teal-200: #E4C79B;
+  --teal-400: #C5A059;
+  --teal-600: #A6803B;
+  --teal-800: #775A22;
+
+  /* Blue */
+  --blue-50:  rgba(55, 138, 221, 0.1);
+  --blue-400: #378ADD;
+  --blue-600: #185FA5;
+
+  /* Amber */
+  --amber-50:  rgba(186, 117, 23, 0.15);
+  --amber-400: #BA7517;
+  --amber-600: #854F0B;
+
+  /* Red */
+  --red-50:  rgba(226, 75, 74, 0.15);
+  --red-400: #E24B4A;
+  --red-600: #A32D2D;
+
+  /* Neutral (mapped to rich dark forest tones) */
+  --gray-50:  #122116;
+  --gray-100: #192D1F;
+  --gray-200: #253F2E;
+  --gray-400: #5F7E6B;
+  --gray-600: #8FA799;
+  --gray-900: #EDF3EE;
+
+  --bg:         #080E09;
+  --surface:    #0E1B11;
+  --surface-2:  #15271A;
+  --border:     rgba(197, 160, 89, 0.15);
+  --border-md:  rgba(197, 160, 89, 0.28);
+  --text-1:     #F6F3ED;
+  --text-2:     #B1BEB5;
+  --text-3:     #7C8B80;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --sidebar-w: 220px;
+  --topbar-h:  52px;
+}
+
+html, body, #root { height: 100%; }
+body { font-family: var(--font-sans); font-size: 14px; color: var(--text-1); background: var(--bg); -webkit-font-smoothing: antialiased; }
+
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--font-sans); cursor: pointer; }
+input, select, textarea { font-family: var(--font-sans); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 10px; }
+
+/* Utility */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }

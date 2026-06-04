@@ -1,0 +1,48 @@
+/* Topbar.css */
+.topbar {
+  height: var(--topbar-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-title { font-size: 15px; font-weight: 500; flex: 1; }
+
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--gray-50);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 5px 10px;
+  width: 180px;
+}
+.search-box i { font-size: 12px; color: var(--text-3); }
+.search-box input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--text-1);
+  width: 100%;
+}
+.search-box input::placeholder { color: var(--text-3); }
+
+.notif-btn { position: relative; }
+.notif-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 6px; height: 6px;
+  background: var(--red-400);
+  border-radius: 50%;
+  border: 1.5px solid var(--surface);
+}

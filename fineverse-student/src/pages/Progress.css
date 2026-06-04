@@ -1,0 +1,306 @@
+/* Progress.css */
+.progress-page { display: flex; flex-direction: column; gap: 20px; padding: 20px; }
+
+.prog-summary { display: flex; gap: 14px; }
+.prog-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 16px 20px;
+  display: flex; align-items: center; gap: 16px;
+  flex: 1;
+}
+.prog-big { font-size: 24px; font-weight: 500; }
+.prog-lab { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.prog-stat-grid { display: flex; gap: 12px; flex: 1; }
+.prog-stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 14px 18px;
+  flex: 1; text-align: center;
+}
+.ps-val { font-size: 22px; font-weight: 500; }
+.ps-lab { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+.scene-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.scene-section-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  background: var(--gray-50);
+}
+.ss-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.ss-name { font-size: 13px; font-weight: 500; }
+.ss-sub  { font-size: 11px; color: var(--text-3); }
+
+.mp-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+}
+.mp-row:last-child { border-bottom: none; }
+.mp-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.mp-info { flex: 1; }
+.mp-name { font-size: 13px; font-weight: 500; }
+.mp-meta { font-size: 11px; color: var(--text-3); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+.mp-score-wrap { display: flex; align-items: center; gap: 8px; }
+.mp-bar { width: 70px; height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+.mp-fill { height: 100%; border-radius: 3px; }
+.mp-score { font-size: 12px; font-weight: 500; min-width: 20px; }
+.mp-not-done { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+
+/* ── Leaderboard ── */
+.leaderboard-page { display: flex; flex-direction: column; gap: 14px; padding: 20px; }
+.lb-podium { padding: 24px; }
+.podium { display: flex; align-items: flex-end; justify-content: center; gap: 16px; }
+.podium-slot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.podium-name  { font-size: 12px; font-weight: 500; }
+.podium-score { font-size: 11px; color: var(--text-3); }
+.podium-block {
+  width: 60px; display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+.podium-slot.rank-1 .podium-block { height: 60px; }
+.podium-slot.rank-2 .podium-block { height: 44px; }
+.podium-slot.rank-3 .podium-block { height: 32px; }
+.lb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lb-table th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 500; color: var(--text-3); border-bottom: 1px solid var(--border); background: var(--gray-50); }
+.lb-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+.lb-table tr:last-child td { border-bottom: none; }
+.me-row td { background: var(--teal-50); }
+
+/* ── Certificate Styles ── */
+.certificate-trigger-card {
+  background: linear-gradient(135deg, #0d2315 0%, #050b06 100%);
+  border: 1px solid var(--teal-400);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  gap: 16px;
+  margin-bottom: 20px;
+  animation: fadeIn 0.4s ease;
+}
+.cert-trigger-info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fbbf24;
+}
+.cert-trigger-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.cert-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+.cert-modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 760px;
+  width: 100%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.certificate-frame {
+  border: 12px double #d4af37;
+  padding: 40px 30px;
+  background: #fffdf9;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  color: #333;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+.cert-header {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #d4af37;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--font-sans, sans-serif);
+}
+.cert-title {
+  font-size: 34px;
+  margin: 20px 0 10px;
+  font-weight: normal;
+  color: #1e293b;
+  font-style: italic;
+}
+.cert-subtitle {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+.cert-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #475569;
+  margin: 15px auto;
+  max-width: 500px;
+}
+.cert-name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0f766e;
+  border-bottom: 2px solid #d4af37;
+  display: inline-block;
+  padding: 4px 20px;
+  margin: 10px 0;
+  min-width: 280px;
+}
+.cert-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 35px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+  font-family: sans-serif;
+  font-size: 11px;
+  color: #64748b;
+}
+.cert-seal {
+  position: absolute;
+  bottom: 80px;
+  right: 50px;
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle, #fbbf24 60%, #d4af37 100%);
+  border-radius: 50%;
+  border: 3px dashed #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 0 0 4px #fbbf24;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #78350f;
+  font-weight: bold;
+  font-size: 8px;
+  transform: rotate(-12deg);
+  line-height: 1.2;
+}
+.cert-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+@media print {
+  body * { visibility: hidden; }
+  .cert-modal-overlay { position: absolute; left: 0; top: 0; background: #fff; padding: 0; width: 100vw; height: 100vh; }
+  .cert-modal-content { box-shadow: none; max-width: 100%; width: 100%; padding: 0; }
+  .cert-modal-content * { visibility: visible; }
+  .cert-actions { display: none; }
+}
+
+/* Progress & Certificate Mobile Optimizations */
+@media (max-width: 767px) {
+  .prog-summary {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .prog-stat-grid {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .certificate-trigger-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .cert-trigger-info {
+    text-align: center;
+  }
+
+  .certificate-trigger-card .btn {
+    justify-content: center;
+  }
+
+  .podium {
+    align-items: center;
+    flex-direction: column-reverse; /* Stacks rank 3, 1, 2 or simple grid */
+    gap: 12px;
+  }
+
+  .podium-slot {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    background: var(--surface-2);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+
+  .podium-block {
+    display: none; /* Hide podium blocks on mobile and use list style */
+  }
+
+  .lb-table th, 
+  .lb-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  .cert-modal-content {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .certificate-frame {
+    padding: 24px 16px;
+    border-width: 6px double var(--teal-400); /* Use thinner gold border */
+  }
+
+  .cert-title {
+    font-size: 20px;
+    margin: 12px 0 6px;
+  }
+
+  .cert-name {
+    font-size: 18px;
+    min-width: 180px;
+    margin: 6px 0;
+  }
+
+  .cert-text {
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 10px auto;
+  }
+
+  .cert-seal {
+    position: relative;
+    margin: 16px auto 0;
+    bottom: auto;
+    right: auto;
+    width: 56px;
+    height: 56px;
+    font-size: 6px;
+    transform: rotate(0deg);
+  }
+
+  .cert-meta-grid {
+    margin-top: 18px;
+    padding-top: 12px;
+  }
+}
+
+

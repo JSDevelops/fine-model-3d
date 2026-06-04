@@ -1,0 +1,238 @@
+/* Simulation.css */
+.sim-shell {
+  height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sim-topbar {
+  height: 48px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.sim-topbar-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+.sim-mission-name { font-size: 13px; font-weight: 500; }
+.sim-scene-name   { font-size: 11px; color: var(--text-3); display: flex; align-items: center; gap: 4px; }
+.sim-step-pill {
+  background: var(--teal-50);
+  color: var(--teal-600);
+  font-size: 11px; font-weight: 500;
+  padding: 3px 10px; border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.sim-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── 3D Viewport ── */
+.sim-viewport {
+  flex: 1;
+  position: relative;
+  background: #111;
+  overflow: hidden;
+}
+.scene-loading {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; color: var(--text-3); font-size: 13px;
+  background: #1A1A18;
+}
+.viewport-controls {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  display: flex; gap: 6px;
+}
+.vp-ctrl-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px; font-size: 11px;
+  background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-md); cursor: pointer;
+  font-family: var(--font-sans);
+  backdrop-filter: blur(4px);
+  transition: background 0.15s;
+}
+.vp-ctrl-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+.hotspot-hint {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  padding: 5px 10px; font-size: 11px;
+  background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.8);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; gap: 6px;
+  animation: fadePulse 2s ease-in-out infinite;
+}
+@keyframes fadePulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+/* ── Coach Panel ── */
+.sim-panel {
+  width: 280px;
+  min-width: 280px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* ── Footer ── */
+.sim-footer {
+  height: 48px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.sim-footer-left, .sim-footer-right {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text-2);
+  min-width: 80px;
+}
+.sim-footer-right { justify-content: flex-end; }
+.step-dots {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.dot {
+  height: 7px; width: 7px; border-radius: 10px;
+  background: var(--gray-200);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+.dot.done   { background: var(--teal-400); }
+.dot.active { background: var(--teal-400); }
+
+/* ── Mission complete ── */
+.mission-complete {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+.mc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.mc-icon {
+  width: 70px; height: 70px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.mc-title { font-size: 20px; font-weight: 600; text-align: center; }
+.mc-sub   { font-size: 13px; color: var(--text-2); text-align: center; line-height: 1.6; }
+.mc-score-ring { margin: 4px 0; }
+.mc-step-scores { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+.mc-step-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.mc-step-label { color: var(--text-3); min-width: 46px; }
+.mc-step-bar   { flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+.mc-step-val   { font-weight: 500; min-width: 24px; text-align: right; }
+.mc-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+/* ── Error ── */
+.sim-error {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 12px; height: 100%;
+  color: var(--text-2); font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .sim-shell {
+    height: 100vh; /* Take full viewport height on mobile */
+  }
+
+  .sim-topbar {
+    padding: 0 10px;
+    height: 44px;
+    gap: 8px;
+  }
+
+  .sim-mission-name {
+    font-size: 12px;
+  }
+
+  .sim-scene-name {
+    display: none; /* Hide scene name on mobile header to save space */
+  }
+
+  .sim-step-pill {
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+
+  .sim-body {
+    flex-direction: column; /* Stack viewport above chat panel */
+  }
+
+  .sim-viewport {
+    height: 38vh; /* Fixed height for 3D simulation area */
+    flex: none;
+  }
+
+  .sim-panel {
+    width: 100%;
+    min-width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    flex: 1; /* Dialogue panel occupies remaining vertical space */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sim-footer {
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  .sim-footer-left span,
+  .sim-footer-right span {
+    font-size: 10px;
+  }
+
+  .dot {
+    height: 5px;
+    width: 5px;
+  }
+
+  .dot.active {
+    width: 12px;
+  }
+
+  .mc-card {
+    padding: 20px 16px;
+    margin: 10px;
+  }
+
+  .mc-title {
+    font-size: 18px;
+  }
+}
+

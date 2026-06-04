@@ -1,0 +1,539 @@
+/* Vocabulary.css */
+.vocab-quiz-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vocab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 8px;
+  background: var(--surface-2);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover {
+  color: var(--text-1);
+}
+
+.tab-btn.active {
+  background: var(--teal-400); /* Gold brand accent */
+  color: #fff;
+  font-weight: 500;
+}
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+/* Vocabulary Grid & Card */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.vocab-card {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.vocab-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--teal-400);
+}
+
+.vocab-card-img {
+  width: 100%;
+  height: 140px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  background: #000;
+}
+
+.vocab-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vocab-week-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.vocab-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.vocab-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.vocab-word {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.2;
+}
+
+.vocab-phonetic {
+  font-size: 11px;
+  color: var(--teal-400); /* Gold color for spelling/phonetic */
+  font-family: var(--font-mono);
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.vocab-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.vocab-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vocab-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vocab-sec-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.vocab-translation-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+}
+
+.vocab-definition-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Quiz Tab & Simulator Layout */
+.quiz-tab-layout {
+  display: flex;
+  gap: 24px;
+  align-items: start;
+}
+
+.quiz-list-panel {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.quizzes-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quiz-row-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.15s;
+}
+
+.quiz-row-card:hover {
+  border-color: var(--border-md);
+}
+
+.quiz-row-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  background: #000;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
+.quiz-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.quiz-row-num {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+}
+
+.quiz-row-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin: 3px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quiz-row-meta {
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.quiz-row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Simulator Panel */
+.simulator-panel {
+  flex: 0.8;
+  position: sticky;
+  top: 72px;
+  width: 100%;
+}
+
+.sim-frame {
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.sim-frame-head {
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--text-1);
+}
+
+/* Simulator Idle Screen */
+.sim-idle-screen {
+  padding: 40px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.sim-icon-glow {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.1);
+  border: 1px solid var(--border-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal-400); /* Gold */
+  font-size: 26px;
+  box-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
+  animation: pulseSim 2s infinite;
+}
+
+@keyframes pulseSim {
+  0%, 100% { box-shadow: 0 0 15px rgba(197, 160, 89, 0.15); }
+  50% { box-shadow: 0 0 25px rgba(197, 160, 89, 0.35); }
+}
+
+.sim-idle-screen h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.sim-idle-screen p {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+/* Simulator Playing Screen */
+.sim-playing-screen {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-playing-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.sim-image-container {
+  width: 100%;
+  height: 150px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+  background: #000;
+}
+
+.sim-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sim-question-text {
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--text-1);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.sim-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.sim-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: var(--font-sans);
+}
+
+.sim-opt-btn:hover:not(:disabled) {
+  background: var(--gray-100);
+  color: var(--text-1);
+  border-color: var(--border-md);
+}
+
+.opt-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--border-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Correct Option Style */
+.sim-opt-btn.correct {
+  background: rgba(29, 158, 117, 0.15);
+  border-color: var(--blue-400); /* In the code it serves as correct marker */
+  border-color: #1d9e75;
+  color: #e6f7f2;
+}
+
+.sim-opt-btn.correct .opt-marker {
+  background: #1d9e75;
+  border-color: #1d9e75;
+}
+
+/* Wrong Option Style */
+.sim-opt-btn.wrong {
+  background: rgba(226, 75, 74, 0.15);
+  border-color: #e24b4a;
+  color: #fcebeb;
+}
+
+.sim-opt-btn.wrong .opt-marker {
+  background: #e24b4a;
+  border-color: #e24b4a;
+}
+
+/* Disabled Option Style */
+.sim-opt-btn.disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.next-quiz-btn {
+  align-self: flex-end;
+  font-size: 12px;
+  padding: 8px 16px;
+}
+
+/* Simulator Ended Screen */
+.sim-ended-screen {
+  padding: 32px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sim-trophy-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid var(--teal-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal-400);
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.sim-ended-screen h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.sim-score-badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-400);
+  margin: 6px 0 16px;
+  padding: 4px 12px;
+  background: rgba(197, 160, 89, 0.1);
+  border-radius: 20px;
+}
+
+.sim-summary-box {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  max-height: 180px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.sim-result-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 11px;
+}
+
+.sim-indicator-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.sim-indicator-bullet.correct { background: #1d9e75; }
+.sim-indicator-bullet.wrong { background: #e24b4a; }
+
+.sim-result-info {
+  flex: 1;
+}
+
+.sim-result-q {
+  font-weight: 550;
+  color: var(--text-1);
+}
+
+.sim-result-sub {
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.text-correct { color: #1d9e75; font-weight: 500; }
+.text-wrong { color: #e24b4a; font-weight: 500; }
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .quiz-tab-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .simulator-panel {
+    position: static;
+    flex: none;
+  }
+}

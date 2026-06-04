@@ -1,0 +1,634 @@
+/* src/pages/ARScanner.css */
+
+.ar-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+/* ── Camera Stream ── */
+.ar-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* ── Three.js Canvas Layer ── */
+.ar-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* ── HUD/UI Layer ── */
+.ar-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.ar-hud * {
+  pointer-events: auto;
+}
+
+/* ── Top Control Bar ── */
+.ar-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.ar-back-btn {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 10px 18px;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.ar-back-btn:hover {
+  background: rgba(15, 23, 42, 0.85);
+  transform: translateX(-2px);
+}
+
+.ar-status-badge {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #34d399;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ar-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse 1.5s infinite;
+}
+
+/* ── Scanning Target Reticle ── */
+.ar-scanner-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  height: 260px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.4);
+}
+
+/* Reticle corner frames */
+.ar-scanner-overlay::before,
+.ar-scanner-overlay::after,
+.ar-scanner-corners::before,
+.ar-scanner-corners::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--teal-400);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.ar-scanner-overlay::before {
+  top: -2px; left: -2px;
+  border-width: 4px 0 0 4px;
+  border-top-left-radius: 20px;
+}
+
+.ar-scanner-overlay::after {
+  top: -2px; right: -2px;
+  border-width: 4px 4px 0 0;
+  border-top-right-radius: 20px;
+}
+
+.ar-scanner-corners::before {
+  bottom: -2px; left: -2px;
+  border-width: 0 0 4px 4px;
+  border-bottom-left-radius: 20px;
+}
+
+.ar-scanner-corners::after {
+  bottom: -2px; right: -2px;
+  border-width: 0 4px 4px 0;
+  border-bottom-right-radius: 20px;
+}
+
+/* Laser scan line */
+.ar-scanline {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--teal-400), transparent);
+  box-shadow: 0 0 12px 2px var(--teal-200);
+  animation: scan 2.5s linear infinite;
+  opacity: 0.8;
+}
+
+.ar-scanner-text {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--teal-400);
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* ── Interactive Info Panels ── */
+.ar-bottom-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.ar-info-card {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg, 16px);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.ar-info-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ar-info-desc {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.ar-info-action {
+  font-size: 11px;
+  color: var(--teal-400);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* ── Button Actions Bar ── */
+.ar-action-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.ar-action-btn {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 12px 24px;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.ar-action-btn:hover {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: var(--teal-400);
+  transform: translateY(-1px);
+}
+
+.ar-action-btn.primary {
+  background: var(--teal-600, #0d9488);
+  border-color: var(--teal-500, #14b8a6);
+}
+
+.ar-action-btn.primary:hover {
+  background: var(--teal-700, #0f766e);
+  box-shadow: 0 0 16px rgba(13, 148, 136, 0.4);
+}
+
+/* ── Prompt/Toast Info overlay ── */
+.ar-loading {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0f172a;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #94a3b8;
+}
+
+/* Keyframes */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── High-Tech Scan Effects ── */
+.ar-camera-flash {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+}
+.ar-camera-flash.flash {
+  animation: flashFade 0.4s ease-out forwards;
+}
+@keyframes flashFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.ar-scan-console {
+  position: absolute;
+  top: 290px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #38bdf8;
+  max-height: 110px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  text-align: left;
+  z-index: 5;
+}
+.console-log-line {
+  display: flex;
+  gap: 8px;
+  line-height: 1.4;
+  animation: fadeInLog 0.15s ease-out forwards;
+}
+.console-timestamp {
+  color: #64748b;
+  flex-shrink: 0;
+}
+.console-text {
+  flex: 1;
+}
+.console-text.success {
+  color: #10b981;
+  font-weight: 500;
+}
+.console-text.warning {
+  color: #fbbf24;
+}
+@keyframes fadeInLog {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── AR Mode Tabs in Topbar ── */
+.ar-mode-tabs {
+  display: flex;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px;
+  border-radius: 20px;
+  gap: 4px;
+}
+.ar-tab-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans, sans-serif);
+  transition: all 0.2s ease;
+}
+.ar-tab-btn:hover {
+  color: #cbd5e1;
+}
+.ar-tab-btn.active {
+  background: var(--teal-600, #0d9488);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+}
+
+/* ── 3D Hologram Floating Panel ── */
+.hologram-3d-card {
+  width: 320px;
+  max-height: 480px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25), inset 0 0 12px rgba(6, 182, 212, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  color: #fff;
+  font-family: var(--font-sans, sans-serif);
+  box-sizing: border-box;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+.holo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.holo-ai-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #06b6d4;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(6, 182, 212, 0.15);
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.holo-speak-btn {
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #22d3ee;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 11px;
+}
+.holo-speak-btn:hover {
+  background: #06b6d4;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+.holo-names {
+  margin-bottom: 12px;
+}
+.holo-title-en {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+.holo-title-th {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #a5f3fc;
+  margin: 2px 0 0 0;
+}
+
+.holo-desc-sec {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.holo-desc-sec strong {
+  color: #38bdf8;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+.holo-th-text {
+  color: #94a3b8;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* AI Pronunciation Coach inside Hologram */
+.holo-coach-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.holo-coach-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.holo-coach-phrase {
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #fbbf24;
+  margin: 0;
+  font-style: italic;
+}
+
+.holo-coach-controls {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.holo-mic-btn {
+  position: relative;
+  background: var(--teal-600, #0d9488);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.holo-mic-btn:hover {
+  background: var(--teal-500, #14b8a6);
+  box-shadow: 0 4px 10px rgba(13, 148, 136, 0.4);
+}
+.holo-mic-btn.recording {
+  background: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+.holo-mic-pulse {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 20px;
+  border: 2px solid #ef4444;
+  animation: micPulse 1.5s infinite;
+  pointer-events: none;
+}
+@keyframes micPulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+.holo-coach-feedback {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.holo-feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #94a3b8;
+}
+.holo-score-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.holo-score-badge.high { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
+.holo-score-badge.mid { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+.holo-score-badge.low { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+.holo-transcript-diff {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.holo-diff-word {
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+.holo-diff-word.status-match {
+  color: #10b981;
+  font-weight: 500;
+  background: rgba(16, 185, 129, 0.1);
+}
+.holo-diff-word.status-miss {
+  color: #64748b;
+  text-decoration: line-through;
+  background: rgba(255, 255, 255, 0.05);
+}
+.holo-extra-words {
+  font-size: 10px;
+  color: #ef4444;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+
