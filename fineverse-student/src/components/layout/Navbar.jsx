@@ -2,17 +2,16 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useProgress } from '../../hooks/useProgress'
-import { MISSIONS } from '../../data/missions'
 import AuthModal from '../auth/AuthModal'
 import './Navbar.css'
 
 export default function Navbar() {
-  const { state, user, logout } = useProgress()
+  const { state, user, logout, missions = [] } = useProgress()
   const navigate = useNavigate()
   const [authOpen, setAuthOpen] = useState(false)
 
   const completed = state.completedMissions.length
-  const total = MISSIONS.length
+  const total = missions.length
   const overallPct = total ? Math.round((completed / total) * 100) : 0
 
   function getInitials(name) {

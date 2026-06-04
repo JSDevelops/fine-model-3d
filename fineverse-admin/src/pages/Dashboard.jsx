@@ -4,34 +4,41 @@ import { ACTIVITY } from '../data/store'
 import { StatCard, Card } from '../components/ui'
 import './Dashboard.css'
 
-const WEEK_DATA = [
-  { day: 'Mon', v: 22 }, { day: 'Tue', v: 32 }, { day: 'Wed', v: 15 },
-  { day: 'Thu', v: 38 }, { day: 'Fri', v: 28 }, { day: 'Sat', v: 8 }, { day: 'Sun', v: 4 },
-]
-const MAX = Math.max(...WEEK_DATA.map(d => d.v))
-
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 const ACTIVITY_COLORS = { success: 'teal', info: 'blue', danger: 'red', warning: 'amber' }
 
 export default function Dashboard() {
   const { state } = useApp()
   const scenes = state.scenes || []
+  const students = state.students || []
 
-  const totalSessions = state.students?.reduce((a, s) => a + s.sessions, 0) || 0
-  const avgScore = state.students?.length
-    ? (state.students.reduce((a, s) => a + s.avgScore, 0) / state.students.length).toFixed(1)
+  // --- Live stats from Firestore students ---
+  const activeStudents = students.filter(s => (s.sessions || 0) > 0).length
+  const totalSessions = students.reduce((a, s) => a + (s.sessions || 0), 0)
+  const avgScore = students.length
+    ? (students.reduce((a, s) => a + (s.avgScore || 0), 0) / students.length).toFixed(1)
     : '0.0'
+  const activeMissions = (state.missions || []).filter(m => m.status === 'active').length
 
-  const topStudents = state.students?.length
-    ? [...state.students].sort((a, b) => b.avgScore - a.avgScore).slice(0, 4)
-    : []
+  // --- Spread sessions across days of the week (estimated distribution) ---
+  const sessionWeights = [0.18, 0.22, 0.12, 0.24, 0.14, 0.06, 0.04]
+  const WEEK_DATA = DAYS.map((day, i) => ({
+    day,
+    v: Math.round(totalSessions * sessionWeights[i]) || 0,
+  }))
+  const MAX = Math.max(...WEEK_DATA.map(d => d.v), 1)
+
+  const topStudents = [...students]
+    .sort((a, b) => (b.avgScore || 0) - (a.avgScore || 0))
+    .slice(0, 4)
 
   return (
     <div className="dashboard">
       <div className="stat-grid">
-        <StatCard label="Total Students"   value={state.students.length} change="+12 this week" changeType="up"   icon="fa-users" />
-        <StatCard label="Total Sessions"   value={totalSessions}          change="+8 vs yesterday" changeType="up" icon="fa-play" />
-        <StatCard label="Avg. Score"       value={avgScore}               change="-2.1 this week"  changeType="down" icon="fa-star" />
-        <StatCard label="Active Missions"  value={state.missions.filter(m => m.status === 'active').length} icon="fa-list-check" />
+        <StatCard label="Total Students"   value={activeStudents}  change={`${students.length} registered`} changeType="up"   icon="fa-users" />
+        <StatCard label="Total Sessions"   value={totalSessions}  change="Cumulative all time" changeType="up" icon="fa-play" />
+        <StatCard label="Avg. Score"       value={avgScore}       change="All students"  changeType="up" icon="fa-star" />
+        <StatCard label="Active Missions"  value={activeMissions} icon="fa-list-check" />
       </div>
 
       <div className="dash-grid">

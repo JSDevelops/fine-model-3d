@@ -1,6 +1,8 @@
 // src/pages/Landing.jsx
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
+import AuthModal from '../components/auth/AuthModal'
 import './Landing.css'
 
 const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }
@@ -48,8 +50,10 @@ function MissionRow({ mission, score, completed, inProgress, onStart, scenes = [
 }
 
 export default function Landing() {
-  const { state, dispatch, missions = [], scenes = [] } = useProgress()
+  const { state, dispatch, user, setUser, missions = [], scenes = [] } = useProgress()
   const navigate = useNavigate()
+  const [authOpen, setAuthOpen] = useState(false)
+  const [pendingMission, setPendingMission] = useState(null)
 
   // Find in-progress mission (started but not completed)
   const resumeMission = state.currentMission
@@ -58,8 +62,23 @@ export default function Landing() {
   const resumeScene = resumeMission ? scenes.find(s => s.id === resumeMission.sceneId) : null
 
   function startMission(mission) {
+    if (!user) {
+      // Not logged in — save target and open login modal
+      setPendingMission(mission)
+      setAuthOpen(true)
+      return
+    }
     dispatch({ type: 'SET_MISSION', payload: mission.id })
     navigate(`/simulation/${mission.id}`)
+  }
+
+  function handleAuthSuccess(loggedInUser) {
+    setUser(loggedInUser)
+    if (pendingMission) {
+      dispatch({ type: 'SET_MISSION', payload: pendingMission.id })
+      navigate(`/simulation/${pendingMission.id}`)
+      setPendingMission(null)
+    }
   }
 
   function resumeCurrent() {
@@ -177,6 +196,13 @@ export default function Landing() {
           </div>
         </section>
       </div>
+
+      {/* Auth Modal — triggered when guest tries to start a mission */}
+      <AuthModal
+        isOpen={authOpen}
+        onClose={() => { setAuthOpen(false); setPendingMission(null) }}
+        onAuthSuccess={handleAuthSuccess}
+      />
     </div>
   )
 }

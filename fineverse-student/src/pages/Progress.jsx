@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
 import { db, isFirebaseEnabled } from '../config/firebase'
-import { collection, query, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore'
+import { collection, query, orderBy, limit, onSnapshot, doc, getDoc } from 'firebase/firestore'
 import './Progress.css'
 
 const DIFF_BADGE = { easy: 'badge-teal', medium: 'badge-amber', hard: 'badge-red' }
@@ -217,26 +217,27 @@ export function Leaderboard() {
     }
 
     setLoading(true)
-    const fetchBoard = async () => {
-      try {
-        const q = query(collection(db, 'students'), orderBy('avgScore', 'desc'), limit(10))
-        const snapshot = await getDocs(q)
-        let list = []
-        let idx = 1
-        snapshot.forEach(docSnap => {
-          const data = docSnap.data()
-          list.push({
-            rank: idx++,
-            name: data.name || 'Anonymous',
-            initials: data.initials || 'ST',
-            color: data.color || 'teal',
-            score: Math.round(data.avgScore) || 0,
-            sessions: data.sessions || 0,
-            isMe: user && user.uid === data.id
-          })
+    // Real-time listener — auto-updates when any student score changes
+    const q = query(collection(db, 'students'), orderBy('avgScore', 'desc'), limit(10))
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      let list = []
+      let idx = 1
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data()
+        list.push({
+          rank: idx++,
+          name: data.name || 'Anonymous',
+          initials: data.initials || 'ST',
+          color: data.color || 'teal',
+          score: Math.round(data.avgScore) || 0,
+          sessions: data.sessions || 0,
+          isMe: user && user.uid === (data.id || docSnap.id)
         })
-        
-        if (user && !user.isGuest && !list.some(p => p.isMe)) {
+      })
+
+      // Append current user if not in top-10
+      if (user && !user.isGuest && !list.some(p => p.isMe)) {
+        try {
           const userDoc = await getDoc(doc(db, 'students', user.uid))
           if (userDoc.exists()) {
             const udata = userDoc.data()
@@ -250,16 +251,20 @@ export function Leaderboard() {
               isMe: true
             })
           }
+        } catch (err) {
+          console.error('Error fetching current user doc:', err)
         }
-        setBoard(list)
-      } catch (err) {
-        console.error('Error fetching leaderboard:', err)
-        setBoard(FAKE_BOARD)
-      } finally {
-        setLoading(false)
       }
-    }
-    fetchBoard()
+
+      setBoard(list)
+      setLoading(false)
+    }, (err) => {
+      console.error('Leaderboard snapshot error:', err)
+      setBoard(FAKE_BOARD)
+      setLoading(false)
+    })
+
+    return () => unsubscribe()
   }, [user, completed])
 
   const rankColors = { 1: '#B8860B', 2: '#9B9A97', 3: '#A0522D' }
