@@ -1,6 +1,6 @@
 // src/pages/Dashboard.jsx
 import { useApp } from '../hooks/useAppContext'
-import { ACTIVITY, SCENES } from '../data/store'
+import { ACTIVITY } from '../data/store'
 import { StatCard, Card } from '../components/ui'
 import './Dashboard.css'
 
@@ -14,6 +14,7 @@ const ACTIVITY_COLORS = { success: 'teal', info: 'blue', danger: 'red', warning:
 
 export default function Dashboard() {
   const { state } = useApp()
+  const scenes = state.scenes || []
 
   const totalSessions = state.students.reduce((a, s) => a + s.sessions, 0)
   const avgScore = (state.students.reduce((a, s) => a + s.avgScore, 0) / state.students.length).toFixed(1)
@@ -61,11 +62,11 @@ export default function Dashboard() {
             </svg>
           </div>
           <div className="scene-legend">
-            {SCENES.map((sc, i) => (
+            {scenes.map((sc, i) => (
               <div key={sc.id} className="legend-row">
-                <div className="legend-dot" style={{ background: i === 0 ? 'var(--teal-400)' : 'var(--blue-400)' }} />
+                <div className="legend-dot" style={{ background: i % 2 === 0 ? 'var(--teal-400)' : 'var(--blue-400)' }} />
                 <div className="legend-label">{sc.name}</div>
-                <div className="legend-val">{i === 0 ? '60%' : '40%'}</div>
+                <div className="legend-val">{i === 0 ? '60%' : i === 1 ? '40%' : '0%'}</div>
               </div>
             ))}
           </div>

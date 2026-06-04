@@ -1,6 +1,6 @@
 // src/hooks/useProgress.jsx
 import { createContext, useContext, useReducer, useEffect, useState } from 'react'
-import { INITIAL_PROGRESS, CURRICULUM_INITIAL, VOCABULARIES_INITIAL, QUIZZES_INITIAL } from '../data/missions'
+import { INITIAL_PROGRESS, CURRICULUM_INITIAL, VOCABULARIES_INITIAL, QUIZZES_INITIAL, MISSIONS, SCENES } from '../data/missions'
 import { auth, db, isFirebaseEnabled } from '../config/firebase'
 import { doc, getDoc, setDoc, collection, onSnapshot } from 'firebase/firestore'
 
@@ -64,6 +64,8 @@ export function ProgressProvider({ children }) {
   const [curriculum, setCurriculum] = useState(CURRICULUM_INITIAL)
   const [vocabularies, setVocabularies] = useState(VOCABULARIES_INITIAL)
   const [quizzes, setQuizzes] = useState(QUIZZES_INITIAL)
+  const [missions, setMissions] = useState(MISSIONS)
+  const [scenes, setScenes] = useState(SCENES)
 
   // Listen to Auth State & Content Subscriptions
   useEffect(() => {
@@ -74,6 +76,7 @@ export function ProgressProvider({ children }) {
     }
 
     let unsubMissions = () => {}
+    let unsubScenes = () => {}
     let unsubCurriculum = () => {}
     let unsubVocab = () => {}
     let unsubQuizzes = () => {}
@@ -118,6 +121,24 @@ export function ProgressProvider({ children }) {
         setAuthLoading(false)
       })
 
+      // Subscribe to real-time missions collection
+      unsubMissions = onSnapshot(collection(db, 'missions'), (snapshot) => {
+        let list = []
+        snapshot.forEach(d => list.push(d.data()))
+        if (list.length > 0) {
+          setMissions(list)
+        }
+      })
+
+      // Subscribe to real-time scenes collection
+      unsubScenes = onSnapshot(collection(db, 'scenes'), (snapshot) => {
+        let list = []
+        snapshot.forEach(d => list.push(d.data()))
+        if (list.length > 0) {
+          setScenes(list)
+        }
+      })
+
       // Subscribe to real-time curriculum collection
       unsubCurriculum = onSnapshot(collection(db, 'curriculum'), (snapshot) => {
         let list = []
@@ -147,6 +168,8 @@ export function ProgressProvider({ children }) {
 
       return () => {
         unsubscribeAuth()
+        unsubMissions()
+        unsubScenes()
         unsubCurriculum()
         unsubVocab()
         unsubQuizzes()
@@ -197,7 +220,7 @@ export function ProgressProvider({ children }) {
   }
 
   return (
-    <ProgressContext.Provider value={{ state, dispatch, user, setUser, authLoading, logout, curriculum, vocabularies, quizzes }}>
+    <ProgressContext.Provider value={{ state, dispatch, user, setUser, authLoading, logout, curriculum, vocabularies, quizzes, missions, scenes }}>
       {children}
     </ProgressContext.Provider>
   )

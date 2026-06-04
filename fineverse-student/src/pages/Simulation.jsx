@@ -2,7 +2,6 @@
 import { useState, Suspense, lazy } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
-import { MISSIONS, SCENES } from '../data/missions'
 import CoachPanel from '../components/simulation/CoachPanel'
 import './Simulation.css'
 
@@ -86,11 +85,11 @@ function MissionComplete({ mission, scores, onRestart, onHome }) {
 
 export default function Simulation() {
   const { missionId } = useParams()
-  const { state, dispatch } = useProgress()
+  const { state, dispatch, missions = [], scenes = [] } = useProgress()
   const navigate = useNavigate()
 
-  const mission = MISSIONS.find(m => m.id === missionId)
-  const scene   = mission ? SCENES.find(s => s.id === mission.sceneId) : null
+  const mission = missions.find(m => m.id === missionId)
+  const scene   = mission ? scenes.find(s => s.id === mission.sceneId) : null
 
   const [stepIndex, setStepIndex]   = useState(state.currentStep ?? 0)
   const [stepScores, setStepScores] = useState([])
@@ -179,7 +178,7 @@ export default function Simulation() {
               <span>Loading 3D scene…</span>
             </div>
           }>
-            <Scene3D sceneId={mission.sceneId} onHotspotClick={() => setHotspotLit(true)} />
+            <Scene3D sceneId={mission.sceneId} scenes={scenes} onHotspotClick={() => setHotspotLit(true)} />
           </Suspense>
 
           {/* Overlay controls */}

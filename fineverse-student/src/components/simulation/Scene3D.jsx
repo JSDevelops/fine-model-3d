@@ -147,18 +147,100 @@ function VIPScene({ onHotspot }) {
 }
 
 /* ── Main exported component ── */
-export default function Scene3D({ sceneId, onHotspotClick }) {
+export default function Scene3D({ sceneId, scenes = [], onHotspotClick }) {
+  const scene = scenes.find(s => s.id === sceneId)
+
+  if (sceneId === 'restaurant') {
+    return (
+      <div style={{ width: '100%', height: '100%', background: '#1A1A18' }}>
+        <Canvas
+          camera={{ position: [0, 2.5, 5], fov: 55 }}
+          gl={{ antialias: true }}
+          aria-label="Restaurant 3D scene"
+        >
+          <RestaurantScene onHotspot={onHotspotClick} />
+          <OrbitControls
+            enablePan={false}
+            maxPolarAngle={Math.PI / 2}
+            minDistance={3}
+            maxDistance={9}
+            target={[0, 0.5, 0]}
+          />
+        </Canvas>
+      </div>
+    )
+  }
+
+  if (sceneId === 'vip') {
+    return (
+      <div style={{ width: '100%', height: '100%', background: '#1A1A18' }}>
+        <Canvas
+          camera={{ position: [0, 2.5, 5], fov: 55 }}
+          gl={{ antialias: true }}
+          aria-label="VIP lounge 3D scene"
+        >
+          <VIPScene onHotspot={onHotspotClick} />
+          <OrbitControls
+            enablePan={false}
+            maxPolarAngle={Math.PI / 2}
+            minDistance={3}
+            maxDistance={9}
+            target={[0, 0.5, 0]}
+          />
+        </Canvas>
+      </div>
+    )
+  }
+
+  // Fallback / Dynamic custom scenes
+  if (!scene) {
+    return (
+      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1A1A18', color: '#fff' }}>
+        <span>3D Scene not found</span>
+      </div>
+    )
+  }
+
   return (
     <div style={{ width: '100%', height: '100%', background: '#1A1A18' }}>
       <Canvas
         camera={{ position: [0, 2.5, 5], fov: 55 }}
         gl={{ antialias: true }}
-        aria-label={sceneId === 'restaurant' ? 'Restaurant 3D scene' : 'VIP lounge 3D scene'}
+        aria-label={`${scene.name} 3D scene`}
       >
-        {sceneId === 'restaurant'
-          ? <RestaurantScene onHotspot={onHotspotClick} />
-          : <VIPScene onHotspot={onHotspotClick} />
-        }
+        <ambientLight intensity={0.6} />
+        <pointLight position={[0, 3, 0]} intensity={1.2} color="#FFF8F0" />
+        <pointLight position={[-2, 2.5, -2]} intensity={0.6} color="#FFE4C4" />
+
+        {scene.objects?.map((obj) => {
+          const key = obj.id || `${obj.type}_${Math.random()}`
+          if (obj.type === 'box') {
+            return <Box key={key} position={obj.position} size={obj.size} color={obj.color} />
+          }
+          if (obj.type === 'cylinder') {
+            return <Cylinder key={key} position={obj.position} args={obj.size} color={obj.color} />
+          }
+          if (obj.type === 'sphere') {
+            return (
+              <mesh key={key} position={obj.position}>
+                <sphereGeometry args={obj.size || [0.5, 16, 16]} />
+                <meshStandardMaterial color={obj.color} />
+              </mesh>
+            )
+          }
+          return null
+        })}
+
+        {scene.hotspots?.map((hs) => (
+          <Hotspot
+            key={hs.id}
+            position={hs.position}
+            label={hs.label}
+            active={hs.active !== false}
+            onClick={onHotspotClick}
+          />
+        ))}
+
         <OrbitControls
           enablePan={false}
           maxPolarAngle={Math.PI / 2}

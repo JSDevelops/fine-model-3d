@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
-import { MISSIONS, SCENES } from '../data/missions'
 import { db, isFirebaseEnabled } from '../config/firebase'
 import { collection, query, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore'
 import './Progress.css'
@@ -61,12 +60,12 @@ function CertificateModal({ isOpen, onClose, userName, avgScore, completedCount 
 }
 
 export function Progress() {
-  const { state, user } = useProgress()
+  const { state, user, missions = [], scenes = [] } = useProgress()
   const navigate  = useNavigate()
   const [certOpen, setCertOpen] = useState(false)
 
   const completed = state.completedMissions.length
-  const total     = MISSIONS.length
+  const total     = missions.length
   const pct       = total ? Math.round((completed / total) * 100) : 0
   const avgScore  = completed
     ? Math.round(Object.values(state.scores).reduce((a, b) => a + b, 0) / completed)
@@ -121,13 +120,15 @@ export function Progress() {
         </div>
       </div>
 
-      {SCENES.map(scene => {
-        const sceneMissions = MISSIONS.filter(m => m.sceneId === scene.id)
+      {scenes.map(scene => {
+        const sceneMissions = missions.filter(m => m.sceneId === scene.id)
+        const sceneBg = scene.bg || (scene.color === 'blue' ? '#E6F1FB' : '#E1F5EE')
+        const sceneIconColor = scene.iconColor || (scene.color === 'blue' ? '#185FA5' : '#0F6E56')
         return (
           <div key={scene.id} className="scene-section">
             <div className="scene-section-header">
-              <div className="ss-icon" style={{ background: scene.bg }}>
-                <i className={`fa-solid ${scene.icon}`} style={{ color: scene.iconColor }} aria-hidden="true" />
+              <div className="ss-icon" style={{ background: sceneBg }}>
+                <i className={`fa-solid ${scene.icon}`} style={{ color: sceneIconColor }} aria-hidden="true" />
               </div>
               <div>
                 <div className="ss-name">{scene.name}</div>
@@ -141,8 +142,8 @@ export function Progress() {
                 const barColor = score >= 70 ? 'var(--teal-400)' : score >= 50 ? 'var(--amber-400)' : 'var(--red-400)'
                 return (
                   <div key={m.id} className="mp-row">
-                    <div className="mp-icon" style={{ background: scene.bg }}>
-                      <i className={`fa-solid ${m.icon}`} style={{ color: scene.iconColor }} aria-hidden="true" />
+                    <div className="mp-icon" style={{ background: sceneBg }}>
+                      <i className={`fa-solid ${m.icon}`} style={{ color: sceneIconColor }} aria-hidden="true" />
                     </div>
                     <div className="mp-info">
                       <div className="mp-name">{m.name}</div>

@@ -1,14 +1,13 @@
 // src/pages/Landing.jsx
 import { useNavigate } from 'react-router-dom'
 import { useProgress } from '../hooks/useProgress'
-import { SCENES, MISSIONS } from '../data/missions'
 import './Landing.css'
 
 const DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }
 const DIFF_BADGE  = { easy: 'badge-teal', medium: 'badge-amber', hard: 'badge-red' }
 
-function MissionRow({ mission, score, completed, inProgress, onStart }) {
-  const scene = SCENES.find(s => s.id === mission.sceneId)
+function MissionRow({ mission, score, completed, inProgress, onStart, scenes = [] }) {
+  const scene = scenes.find(s => s.id === mission.sceneId)
   const barPct = score || 0
   const barColor = barPct >= 70 ? 'var(--teal-400)' : barPct >= 50 ? 'var(--amber-400)' : 'var(--red-400)'
 
@@ -49,14 +48,14 @@ function MissionRow({ mission, score, completed, inProgress, onStart }) {
 }
 
 export default function Landing() {
-  const { state, dispatch } = useProgress()
+  const { state, dispatch, missions = [], scenes = [] } = useProgress()
   const navigate = useNavigate()
 
   // Find in-progress mission (started but not completed)
   const resumeMission = state.currentMission
-    ? MISSIONS.find(m => m.id === state.currentMission)
+    ? missions.find(m => m.id === state.currentMission)
     : null
-  const resumeScene = resumeMission ? SCENES.find(s => s.id === resumeMission.sceneId) : null
+  const resumeScene = resumeMission ? scenes.find(s => s.id === resumeMission.sceneId) : null
 
   function startMission(mission) {
     dispatch({ type: 'SET_MISSION', payload: mission.id })
@@ -87,8 +86,8 @@ export default function Landing() {
           </p>
           <div className="hero-btns">
             <button className="btn btn-primary btn-lg" onClick={() => {
-              const first = MISSIONS.find(m => !state.completedMissions.includes(m.id)) ?? MISSIONS[0]
-              startMission(first)
+              const first = missions.find(m => !state.completedMissions.includes(m.id)) ?? missions[0]
+              if (first) startMission(first)
             }}>
               <i className="fa-solid fa-play" aria-hidden="true" /> Start training
             </button>
@@ -101,8 +100,8 @@ export default function Landing() {
           </div>
           <div className="hero-stats">
             <div className="hstat"><div className="hstat-v">248</div><div className="hstat-l">Active students</div></div>
-            <div className="hstat"><div className="hstat-v">{MISSIONS.length}</div><div className="hstat-l">Mission scenarios</div></div>
-            <div className="hstat"><div className="hstat-v">{SCENES.length}</div><div className="hstat-l">3D environments</div></div>
+            <div className="hstat"><div className="hstat-v">{missions.length}</div><div className="hstat-l">Mission scenarios</div></div>
+            <div className="hstat"><div className="hstat-v">{scenes.length}</div><div className="hstat-l">3D environments</div></div>
             <div className="hstat"><div className="hstat-v">76</div><div className="hstat-l">Avg. score</div></div>
           </div>
         </div>
@@ -134,18 +133,18 @@ export default function Landing() {
         <section>
           <h2 className="section-title">Choose a training environment</h2>
           <div className="scene-grid">
-            {SCENES.map(scene => {
-              const sceneMissions = MISSIONS.filter(m => m.sceneId === scene.id)
+            {scenes.map(scene => {
+              const sceneMissions = missions.filter(m => m.sceneId === scene.id)
               const sceneDone = sceneMissions.filter(m => state.completedMissions.includes(m.id)).length
               return (
                 <div key={scene.id} className="scene-card card">
-                  <div className="scene-cover" style={{ background: scene.bg }}>
-                    <i className={`fa-solid ${scene.icon}`} style={{ fontSize: 40, color: scene.iconColor }} aria-hidden="true" />
-                    <span className="scene-cover-sub" style={{ color: scene.iconColor }}>{scene.subtitle}</span>
+                  <div className="scene-cover" style={{ background: scene.bg || (scene.color === 'blue' ? '#E6F1FB' : '#E1F5EE') }}>
+                    <i className={`fa-solid ${scene.icon}`} style={{ fontSize: 40, color: scene.iconColor || (scene.color === 'blue' ? '#185FA5' : '#0F6E56') }} aria-hidden="true" />
+                    <span className="scene-cover-sub" style={{ color: scene.iconColor || (scene.color === 'blue' ? '#185FA5' : '#0F6E56') }}>{scene.subtitle}</span>
                   </div>
                   <div className="scene-card-body">
                     <div className="scene-card-name">{scene.name}</div>
-                    <p className="scene-card-desc">{scene.description}</p>
+                    <p className="scene-card-desc">{scene.description || `Experience realistic dialogues in a custom 3D ${scene.name.toLowerCase()}.`}</p>
                     <div className="scene-card-footer">
                       <span className={`badge badge-${scene.color}`}>{sceneMissions.length} missions</span>
                       <span className="scene-done">{sceneDone}/{sceneMissions.length} completed</span>
@@ -164,7 +163,7 @@ export default function Landing() {
             <button className="btn btn-ghost btn-sm" onClick={() => navigate('/progress')}>See all</button>
           </div>
           <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            {MISSIONS.map(m => (
+            {missions.map(m => (
               <MissionRow
                 key={m.id}
                 mission={m}
@@ -172,6 +171,7 @@ export default function Landing() {
                 completed={state.completedMissions.includes(m.id)}
                 inProgress={state.currentMission === m.id}
                 onStart={() => startMission(m)}
+                scenes={scenes}
               />
             ))}
           </div>

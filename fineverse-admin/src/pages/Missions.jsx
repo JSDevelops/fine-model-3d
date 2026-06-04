@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { useApp } from '../hooks/useAppContext'
 import { Badge, Button, Card, Modal, FormGroup, Input, Select, Textarea, EmptyState } from '../components/ui'
-import { SCENES } from '../data/store'
 import './Missions.css'
 
 const DIFF_BADGE = { easy: 'teal', medium: 'amber', hard: 'red' }
@@ -22,6 +21,8 @@ function validate(f) {
 }
 
 function MissionModal({ mission, onClose, onSave }) {
+  const { state } = useApp()
+  const scenes = state.scenes || []
   const [form, setForm] = useState(mission ?? EMPTY_FORM)
   const [errors, setErrors] = useState({})
 
@@ -74,7 +75,7 @@ function MissionModal({ mission, onClose, onSave }) {
             <Select value={form.sceneId} onChange={e => set('sceneId', e.target.value)}
               style={errors.sceneId ? { borderColor: 'var(--red-400)' } : {}}>
               <option value="">— Select scene —</option>
-              {SCENES.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {scenes.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
             </Select>
             {errors.sceneId && <div className="form-error">{errors.sceneId}</div>}
           </FormGroup>
@@ -144,13 +145,15 @@ export default function Missions() {
     setDeleteTarget(null)
   }
 
+  const scenes = state.scenes || []
+
   return (
     <div className="missions-page">
       <div className="page-toolbar">
         <div className="filters">
           <Select value={filterScene} onChange={e => setFilterScene(e.target.value)} style={{ width: 160 }}>
             <option value="">All scenes</option>
-            {SCENES.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+            {scenes.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </Select>
           <Select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{ width: 130 }}>
             <option value="">All statuses</option>
@@ -185,7 +188,7 @@ export default function Missions() {
             </thead>
             <tbody>
               {missions.map(m => {
-                const scene = SCENES.find(s => s.id === m.sceneId)
+                const scene = scenes.find(s => s.id === m.sceneId)
                 const barColor = m.completionRate >= 70 ? 'var(--teal-400)' : m.completionRate >= 40 ? 'var(--amber-400)' : 'var(--red-400)'
                 return (
                   <tr key={m.id}>
