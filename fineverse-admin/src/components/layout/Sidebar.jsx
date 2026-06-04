@@ -18,7 +18,7 @@ const NAV = [
     { to: '/scores',   icon: 'fa-chart-bar',   label: 'Scores & Reports' },
   ]},
   { section: 'System', items: [
-    { to: 'http://127.0.0.1:5174', icon: 'fa-graduation-cap', label: 'Student View', external: true },
+    { to: import.meta.env.VITE_STUDENT_URL || 'http://127.0.0.1:5174', icon: 'fa-graduation-cap', label: 'Student View', external: true },
     { to: '/settings', icon: 'fa-gear',        label: 'Settings' },
   ]},
 ]

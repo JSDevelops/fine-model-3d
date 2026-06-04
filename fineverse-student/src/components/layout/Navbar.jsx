@@ -43,7 +43,7 @@ export default function Navbar() {
           <NavLink to="/ar"            className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>AR Mode</NavLink>
           <NavLink to="/progress"      className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>My progress</NavLink>
           <NavLink to="/leaderboard"   className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Leaderboard</NavLink>
-          <a href="http://127.0.0.1:5173" target="_blank" rel="noopener noreferrer" className="nav-link">
+          <a href={import.meta.env.VITE_ADMIN_URL || "http://127.0.0.1:5173"} target="_blank" rel="noopener noreferrer" className="nav-link">
             <i className="fa-solid fa-user-shield" style={{ marginRight: 4 }} /> Admin
           </a>
         </div>
