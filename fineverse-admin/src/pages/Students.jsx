@@ -27,7 +27,7 @@ export default function Students() {
     if (!form.name.trim()) errs.name = 'Name is required'
     if (!form.email.trim()) errs.email = 'Email is required'
     if (Object.keys(errs).length) { setErrors(errs); return }
-    const initials = form.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+    const initials = form.name.split(' ').filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase()
     dispatch({ type: 'ADD_STUDENT', payload: { ...form, initials, sessions: 0, avgScore: 0, lastActive: 'Just now', status: 'active' } })
     dispatch({ type: 'NOTIFY', payload: { type: 'success', message: `Student "${form.name}" added.` } })
     setAddOpen(false)

@@ -205,7 +205,7 @@ export function Leaderboard() {
       const localBoard = FAKE_BOARD.map(p => {
         if (p.isMe) {
           const dispName = user ? (user.displayName || user.email.split('@')[0]) : 'You'
-          const initials = user ? (user.displayName?.split(' ').map(n=>n[0]).join('').toUpperCase() || 'ME') : 'ME'
+          const initials = user ? (user.displayName?.split(' ').filter(Boolean).map(n=>n[0]).join('').toUpperCase() || 'ME') : 'ME'
           return { ...p, score: myAvg, sessions: mySessions, name: dispName, initials }
         }
         return p

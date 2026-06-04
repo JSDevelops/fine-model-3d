@@ -16,12 +16,14 @@ export default function Dashboard() {
   const { state } = useApp()
   const scenes = state.scenes || []
 
-  const totalSessions = state.students.reduce((a, s) => a + s.sessions, 0)
-  const avgScore = (state.students.reduce((a, s) => a + s.avgScore, 0) / state.students.length).toFixed(1)
+  const totalSessions = state.students?.reduce((a, s) => a + s.sessions, 0) || 0
+  const avgScore = state.students?.length
+    ? (state.students.reduce((a, s) => a + s.avgScore, 0) / state.students.length).toFixed(1)
+    : '0.0'
 
-  const topStudents = [...state.students]
-    .sort((a, b) => b.avgScore - a.avgScore)
-    .slice(0, 4)
+  const topStudents = state.students?.length
+    ? [...state.students].sort((a, b) => b.avgScore - a.avgScore).slice(0, 4)
+    : []
 
   return (
     <div className="dashboard">
@@ -94,19 +96,23 @@ export default function Dashboard() {
               <tr><th>#</th><th>Name</th><th>Sessions</th><th>Avg</th></tr>
             </thead>
             <tbody>
-              {topStudents.map((s, i) => (
-                <tr key={s.id}>
-                  <td className={`rank rank-${i + 1}`}>{i + 1}</td>
-                  <td>
-                    <div className="name-cell">
-                      <div className={`avatar avatar-${s.color} avatar-sm`}>{s.initials}</div>
-                      {s.name.split(' ')[0] + ' ' + s.name.split(' ')[1]?.[0] + '.'}
-                    </div>
-                  </td>
-                  <td>{s.sessions}</td>
-                  <td className={s.avgScore >= 80 ? 'score-hi' : ''}>{s.avgScore.toFixed(1)}</td>
-                </tr>
-              ))}
+              {topStudents.map((s, i) => {
+                const nameParts = s.name.split(' ').filter(Boolean)
+                const displayName = nameParts[0] + (nameParts[1] ? ' ' + nameParts[1][0] + '.' : '')
+                return (
+                  <tr key={s.id}>
+                    <td className={`rank rank-${i + 1}`}>{i + 1}</td>
+                    <td>
+                      <div className="name-cell">
+                        <div className={`avatar avatar-${s.color} avatar-sm`}>{s.initials}</div>
+                        {displayName}
+                      </div>
+                    </td>
+                    <td>{s.sessions}</td>
+                    <td className={s.avgScore >= 80 ? 'score-hi' : ''}>{(s.avgScore || 0).toFixed(1)}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </Card>
