@@ -3,11 +3,7 @@ node_modules/
 fineverse-admin/node_modules/
 fineverse-student/node_modules/
 
-# Build output
-fineverse-admin/dist/
-fineverse-student/dist/
-
-# Vite cache
+# Vite cache only — dist is committed for Netlify direct deploy
 .vite/
 fineverse-admin/.vite/
 fineverse-student/.vite/
