@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output (generated during Netlify build from source)
+dist/
+
+# Netlify
+.netlify/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Logs / OS
+*.log
+.DS_Store

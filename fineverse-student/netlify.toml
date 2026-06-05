@@ -1,6 +1,15 @@
 [build]
-  command   = "echo 'Using pre-built dist'"
+  command   = "npm install && npm run build"
   publish   = "dist"
+
+[build.environment]
+  # The Firebase Web API key is a public client identifier (access is enforced
+  # by Firebase Security Rules and authorized domains), so it is expected to
+  # appear in the client bundle. Tell the secret scanner to allow this value.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY"
+
+[functions]
+  directory = "netlify/functions"
 
 [[redirects]]
   from   = "/*"
