@@ -553,68 +553,41 @@ export default function ARScanner() {
       setScanLogs(prev => [...prev, { text: 'Submitting visual tensor payload to Gemini API...', time: '0.8s', type: 'info' }])
     }, 800)
 
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY
-    if (apiKey && apiKey !== 'your_gemini_key') {
-      try {
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [
-                    {
-                      text: 'Identify the service or hospitality-related object in the picture. Respond ONLY in valid JSON format. JSON schema: {"object_name_en": string, "object_name_th": string, "description_en": string, "description_th": string, "practice_phrase_en": string}. Do not wrap the response in markdown blocks.'
-                    },
-                    {
-                      inlineData: {
-                        mimeType: 'image/jpeg',
-                        data: base64Image
-                      }
-                    }
-                  ]
-                }
-              ],
-              generationConfig: {
-                responseMimeType: 'application/json'
-              }
-            })
-          }
-        )
-        
-        const resData = await response.json()
-        const rawText = resData.candidates?.[0]?.content?.parts?.[0]?.text || ''
-        const parsed = JSON.parse(rawText)
-        
-        setScanLogs(prev => [...prev, { text: `Gemini resolved: ${parsed.object_name_en}`, time: '1.4s', type: 'success' }])
-        
-        setTimeout(() => {
-          setAiResult({
-            titleEn: parsed.object_name_en,
-            titleTh: parsed.object_name_th,
-            descEn: parsed.description_en,
-            descTh: parsed.description_th,
-            practicePhrase: parsed.practice_phrase_en || `This is a ${parsed.object_name_en.toLowerCase()} for hospitality service.`,
-            keywords: parsed.object_name_en.split(' ')
-          })
-          setIsScanning(false)
-          setScanStatus(`Analysis complete: ${parsed.object_name_en}`)
-        }, 1800)
+    // The Gemini key lives server-side in the gemini-scan Netlify Function so it
+    // is never shipped to the browser. If the function reports the key is not
+    // configured (or any error occurs), we fall back to the local mock scan.
+    try {
+      const response = await fetch('/.netlify/functions/gemini-scan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: base64Image })
+      })
 
-      } catch (e) {
-        console.error('Gemini API call failed:', e)
-        setScanLogs(prev => [...prev, { text: 'Gemini call failed. Running local mock fallback...', time: '1.3s', type: 'warning' }])
-        setTimeout(triggerMockScan, 1000)
-      }
-    } else {
+      const resData = await response.json()
+      const rawText = resData.candidates?.[0]?.content?.parts?.[0]?.text || ''
+      const parsed = JSON.parse(rawText)
+
+      setScanLogs(prev => [...prev, { text: `Gemini resolved: ${parsed.object_name_en}`, time: '1.4s', type: 'success' }])
+
       setTimeout(() => {
-        setScanLogs(prev => [...prev, { text: 'Gemini key unset. Loading local classifier...', time: '1.1s', type: 'info' }])
-      }, 1200)
-      setTimeout(triggerMockScan, 1800)
+        setAiResult({
+          titleEn: parsed.object_name_en,
+          titleTh: parsed.object_name_th,
+          descEn: parsed.description_en,
+          descTh: parsed.description_th,
+          practicePhrase: parsed.practice_phrase_en || `This is a ${parsed.object_name_en.toLowerCase()} for hospitality service.`,
+          keywords: parsed.object_name_en.split(' ')
+        })
+        setIsScanning(false)
+        setScanStatus(`Analysis complete: ${parsed.object_name_en}`)
+      }, 1800)
+
+    } catch (e) {
+      console.error('Gemini scan failed:', e)
+      setScanLogs(prev => [...prev, { text: 'Gemini unavailable. Running local mock fallback...', time: '1.3s', type: 'warning' }])
+      setTimeout(triggerMockScan, 1000)
     }
   }
 
