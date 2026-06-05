@@ -65,6 +65,8 @@ function reducer(state, action) {
       return { ...state, missions: state.missions.filter(m => m.id !== action.payload) }
     case 'ADD_STUDENT':
       return { ...state, students: [...state.students, { ...action.payload, id: 's' + Date.now() }] }
+    case 'UPDATE_STUDENT':
+      return { ...state, students: state.students.map(s => s.id === action.payload.id ? action.payload : s) }
     case 'DELETE_STUDENT':
       return { ...state, students: state.students.filter(s => s.id !== action.payload) }
     case 'ADD_WEEK':
@@ -272,6 +274,10 @@ export function AppProvider({ children }) {
             const newId = 's' + Date.now()
             const studentData = { ...action.payload, id: newId }
             await setDoc(doc(db, 'students', newId), studentData)
+            break
+          }
+          case 'UPDATE_STUDENT': {
+            await setDoc(doc(db, 'students', action.payload.id), action.payload, { merge: true })
             break
           }
           case 'DELETE_STUDENT': {

@@ -11,8 +11,9 @@ export default function Students() {
   const { state, dispatch } = useApp()
   const [search, setSearch] = useState('')
   const [addOpen, setAddOpen] = useState(false)
+  const [editTarget, setEditTarget] = useState(null)
   const [deleteTarget, setDeleteTarget] = useState(null)
-  const [form, setForm] = useState({ name: '', email: '', initials: '', color: 'teal' })
+  const [form, setForm] = useState({ name: '', email: '', initials: '', color: 'teal', status: 'active' })
   const [errors, setErrors] = useState({})
   const [reportTarget, setReportTarget] = useState(null)
   const [certPreviewOpen, setCertPreviewOpen] = useState(false)
@@ -28,10 +29,44 @@ export default function Students() {
     if (!form.email.trim()) errs.email = 'Email is required'
     if (Object.keys(errs).length) { setErrors(errs); return }
     const initials = form.name.split(' ').filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase()
-    dispatch({ type: 'ADD_STUDENT', payload: { ...form, initials, sessions: 0, avgScore: 0, lastActive: 'Just now', status: 'active' } })
+    dispatch({ type: 'ADD_STUDENT', payload: { name: form.name, email: form.email, color: form.color, initials, sessions: 0, avgScore: 0, lastActive: 'Just now', status: 'active' } })
     dispatch({ type: 'NOTIFY', payload: { type: 'success', message: `Student "${form.name}" added.` } })
     setAddOpen(false)
-    setForm({ name: '', email: '', initials: '', color: 'teal' })
+    setForm({ name: '', email: '', initials: '', color: 'teal', status: 'active' })
+    setErrors({})
+  }
+
+  function handleStartEdit(student) {
+    setEditTarget(student)
+    setForm({
+      name: student.name,
+      email: student.email,
+      color: student.color || 'teal',
+      status: student.status || 'active'
+    })
+    setErrors({})
+  }
+
+  function handleUpdate() {
+    const errs = {}
+    if (!form.name.trim()) errs.name = 'Name is required'
+    if (!form.email.trim()) errs.email = 'Email is required'
+    if (Object.keys(errs).length) { setErrors(errs); return }
+    const initials = form.name.split(' ').filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase()
+    
+    const updatedStudent = {
+      ...editTarget,
+      name: form.name,
+      email: form.email,
+      color: form.color,
+      status: form.status,
+      initials
+    }
+    
+    dispatch({ type: 'UPDATE_STUDENT', payload: updatedStudent })
+    dispatch({ type: 'NOTIFY', payload: { type: 'success', message: `Student "${form.name}" updated.` } })
+    setEditTarget(null)
+    setForm({ name: '', email: '', initials: '', color: 'teal', status: 'active' })
     setErrors({})
   }
 
@@ -118,7 +153,9 @@ export default function Students() {
                         >
                           <i className="fa-solid fa-chart-bar" aria-hidden="true" />
                         </button>
-                        <button className="icon-btn" title="Edit"><i className="fa-solid fa-pen" aria-hidden="true" /></button>
+                        <button className="icon-btn" title="Edit" onClick={() => handleStartEdit(s)}>
+                          <i className="fa-solid fa-pen" aria-hidden="true" />
+                        </button>
                         <button className="icon-btn danger" title="Delete" onClick={() => setDeleteTarget(s)}>
                           <i className="fa-solid fa-trash" aria-hidden="true" />
                         </button>
@@ -153,6 +190,39 @@ export default function Students() {
               <option value="amber">Amber</option>
               <option value="red">Red</option>
               <option value="gray">Gray</option>
+            </Select>
+          </FormGroup>
+        </Modal>
+      )}
+
+      {editTarget && (
+        <Modal title="Edit student" onClose={() => { setEditTarget(null); setForm({ name: '', email: '', initials: '', color: 'teal', status: 'active' }); }}
+          footer={<>
+            <Button variant="secondary" onClick={() => { setEditTarget(null); setForm({ name: '', email: '', initials: '', color: 'teal', status: 'active' }); }}>Cancel</Button>
+            <Button icon="fa-save" onClick={handleUpdate}>Save changes</Button>
+          </>}>
+          <FormGroup label="Full name" required>
+            <Input value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} placeholder="e.g. Nattaya Kanjana" />
+            {errors.name && <div className="form-error">{errors.name}</div>}
+          </FormGroup>
+          <FormGroup label="Email" required>
+            <Input type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} placeholder="student@email.com" />
+            {errors.email && <div className="form-error">{errors.email}</div>}
+          </FormGroup>
+          <FormGroup label="Avatar color">
+            <Select value={form.color} onChange={e => setForm(p => ({ ...p, color: e.target.value }))}>
+              <option value="teal">Teal</option>
+              <option value="blue">Blue</option>
+              <option value="amber">Amber</option>
+              <option value="red">Red</option>
+              <option value="gray">Gray</option>
+            </Select>
+          </FormGroup>
+          <FormGroup label="Status">
+            <Select value={form.status} onChange={e => setForm(p => ({ ...p, status: e.target.value }))}>
+              <option value="active">Active</option>
+              <option value="needs-help">Needs help</option>
+              <option value="inactive">Inactive</option>
             </Select>
           </FormGroup>
         </Modal>
