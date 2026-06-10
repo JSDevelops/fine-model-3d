@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import * as THREE from 'three'
+import '@google/model-viewer'
 import { useTTS, useSTT, scoreTranscript, computeSpeechDiff } from '../hooks/useSpeech'
 import './ARScanner.css'
 
@@ -463,7 +464,7 @@ export default function ARScanner() {
   const [loading, setLoading] = useState(true)
   const [cameraActive, setCameraActive] = useState(false)
   const [cameraError, setCameraError] = useState(null)
-  const [activeItem, setActiveItem] = useState('coffeemaker') // 'coffeemaker' | 'shaker' | 'tray'
+  const [activeItem, setActiveItem] = useState('coffeemaker') // 'coffeemaker' | 'shaker' | 'tray' | 'coffeecup'
   const [selectedHotspot, setSelectedHotspot] = useState(null)
   const [scanStatus, setScanStatus] = useState('Align target to detect QR markers')
   
@@ -481,6 +482,53 @@ export default function ARScanner() {
 
   const { speak, speaking } = useTTS()
   const { start: startSTT, stop: stopSTT, transcript: sttTranscript, listening: sttListening } = useSTT()
+
+  // Parse query parameter ?item= on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const itemParam = params.get('item');
+    if (itemParam) {
+      const normalized = itemParam.toLowerCase().replace(/_|-/g, '');
+      if (normalized === 'coffeecup' || normalized === 'cup' || normalized === 'glass') {
+        setUnlockedItems(prev => prev.includes('coffeecup') ? prev : [...prev, 'coffeecup']);
+        setActiveItem('coffeecup');
+        setMode('qr');
+        setScanStatus('Viewing Espresso Coffee Cup');
+      } else if (normalized === 'shaker' || normalized === 'cocktailshaker') {
+        setUnlockedItems(prev => prev.includes('shaker') ? prev : [...prev, 'shaker']);
+        setActiveItem('shaker');
+        setMode('qr');
+        setScanStatus('Viewing Cocktail Shaker');
+      } else if (normalized === 'tray' || normalized === 'vipwelcomevray') {
+        setUnlockedItems(prev => prev.includes('tray') ? prev : [...prev, 'tray']);
+        setActiveItem('tray');
+        setMode('qr');
+        setScanStatus('Viewing VIP Champagne Tray');
+      } else if (normalized === 'coffeemaker') {
+        setActiveItem('coffeemaker');
+        setMode('qr');
+        setScanStatus('Viewing Espresso Maker');
+      }
+    }
+  }, []);
+
+  // Set default hotspot and AI coach info for coffeecup
+  useEffect(() => {
+    if (activeItem === 'coffeecup') {
+      setSelectedHotspot({
+        title: "Espresso Coffee Cup (แก้วกาแฟเอสเปรสโซ)",
+        desc: "A small ceramic cup (demitasse) designed for serving espresso. Hold the cup by the handle, keep it pre-heated, and place it on a matching saucer. Speak the phrase below to practice serving."
+      });
+      setAiResult({
+        titleEn: 'Espresso Demitasse Cup',
+        titleTh: 'ถ้วยกาแฟเอสเปรสโซ',
+        descEn: 'A small cup designed for serving a single or double shot of espresso. It typically holds around 60-90ml and is pre-heated to retain temperature.',
+        descTh: 'ถ้วยขนาดเล็กที่ออกแบบมาสำหรับเสิร์ฟเอสเปรสโซ 1 หรือ 2 ช็อต มักจะมีความจุประมาณ 60-90 มิลลิลิตร และต้องอุ่นถ้วยล่วงหน้าเพื่อรักษาอุณหภูมิ',
+        practicePhrase: 'Please serve the double espresso in a pre heated demitasse cup',
+        keywords: ['serve', 'double', 'espresso', 'pre-heated', 'cup']
+      });
+    }
+  }, [activeItem]);
 
   // Real-time speech alignment feedback
   useEffect(() => {
@@ -568,7 +616,7 @@ export default function ARScanner() {
                 {
                   parts: [
                     {
-                      text: 'Identify the service or hospitality-related object in the picture. Respond ONLY in valid JSON format. JSON schema: {"object_name_en": string, "object_name_th": string, "description_en": string, "description_th": string, "practice_phrase_en": string}. Do not wrap the response in markdown blocks.'
+                      text: 'Identify the service or hospitality-related object in the picture, OR if there is a QR code in the picture, decode it. Respond ONLY in valid JSON format. JSON schema: {"object_name_en": string, "object_name_th": string, "description_en": string, "description_th": string, "practice_phrase_en": string, "qr_code_detected": boolean, "qr_decoded_value": string}. Do not wrap the response in markdown blocks.'
                     },
                     {
                       inlineData: {
@@ -589,6 +637,33 @@ export default function ARScanner() {
         const resData = await response.json()
         const rawText = resData.candidates?.[0]?.content?.parts?.[0]?.text || ''
         const parsed = JSON.parse(rawText)
+        
+        if (parsed.qr_code_detected && parsed.qr_decoded_value) {
+          setScanLogs(prev => [...prev, { text: `QR Code detected: ${parsed.qr_decoded_value}`, time: '1.4s', type: 'success' }])
+          
+          let matchedItem = null;
+          const val = parsed.qr_decoded_value.toLowerCase();
+          if (val.includes('coffeecup') || val.includes('cup') || val.includes('glass')) {
+            matchedItem = 'coffeecup';
+          } else if (val.includes('shaker') || val.includes('cocktailshaker')) {
+            matchedItem = 'shaker';
+          } else if (val.includes('tray') || val.includes('vipwelcomevray')) {
+            matchedItem = 'tray';
+          } else if (val.includes('coffeemaker')) {
+            matchedItem = 'coffeemaker';
+          }
+          
+          if (matchedItem) {
+            setTimeout(() => {
+              setUnlockedItems(prev => prev.includes(matchedItem) ? prev : [...prev, matchedItem]);
+              setActiveItem(matchedItem);
+              setMode('qr');
+              setIsScanning(false);
+              setScanStatus(`QR scan success: Loaded ${matchedItem}`);
+            }, 1800);
+            return;
+          }
+        }
         
         setScanLogs(prev => [...prev, { text: `Gemini resolved: ${parsed.object_name_en}`, time: '1.4s', type: 'success' }])
         
@@ -704,17 +779,22 @@ export default function ARScanner() {
       setUnlockedItems(prev => [...prev, itemToUnlock])
       setActiveItem(itemToUnlock)
       setIsScanning(false)
-      setScanStatus(`Marker matched! Unlocked ${itemToUnlock === 'shaker' ? 'Cocktail Shaker' : 'VIP Champagne Tray'}`)
+      setScanStatus(`Marker matched! Unlocked ${itemToUnlock === 'shaker' ? 'Cocktail Shaker' : itemToUnlock === 'tray' ? 'VIP Champagne Tray' : 'Espresso Coffee Cup'}`)
       
       if (itemToUnlock === 'shaker') {
         setSelectedHotspot({
           title: "Beverage Shaker Unlocked!",
           desc: "Target QR matched. Tap the highlighted blue hotspots on the metallic shaker to study standard bar shaking and straining protocols."
         })
-      } else {
+      } else if (itemToUnlock === 'tray') {
         setSelectedHotspot({
           title: "VIP Champagne Tray Unlocked!",
           desc: "Target QR matched. Tap the highlighted blue hotspots on the golden champagne tray to study VIP escort and serving protocols."
+        })
+      } else {
+        setSelectedHotspot({
+          title: "Espresso Coffee Cup Unlocked!",
+          desc: "Target QR matched. Loaded Coffee Cup in WebAR. Tap the 'View in AR' button to place it on your physical table."
         })
       }
 
@@ -727,7 +807,7 @@ export default function ARScanner() {
     if (isScanning) return
     setActiveItem(itemType)
     setSelectedHotspot(null)
-    setScanStatus(`Viewing ${itemType === 'coffeemaker' ? 'Coffee Machine' : itemType === 'shaker' ? 'Cocktail Shaker' : 'VIP Champagne Tray'}`)
+    setScanStatus(`Viewing ${itemType === 'coffeemaker' ? 'Coffee Machine' : itemType === 'shaker' ? 'Cocktail Shaker' : itemType === 'tray' ? 'VIP Champagne Tray' : 'Espresso Coffee Cup'}`)
   }
 
   return (
@@ -763,49 +843,90 @@ export default function ARScanner() {
         style={{ display: cameraActive ? 'block' : 'none' }}
       />
 
-      {/* Three.js Interactive R3F Canvas Layer */}
+      {/* Interactive 3D Model Display Layer (WebAR or Three.js Canvas) */}
       {cameraActive && (
-        <div className="ar-canvas-container">
-          <Canvas
-            camera={{ position: [0, 1.2, 3], fov: 45 }}
-            gl={{ antialias: true, alpha: true }}
-            onCreated={({ gl }) => {
-              gl.setClearColor(0x000000, 0) // Transparent clear color
-            }}
-          >
-            <ambientLight intensity={0.8} />
-            <directionalLight position={[2, 4, 3]} intensity={1.2} />
-            <pointLight position={[-2, 3, -1]} intensity={0.5} />
+        mode === 'qr' && activeItem === 'coffeecup' ? (
+          <div className="ar-canvas-container" style={{ pointerEvents: 'auto' }}>
+            <model-viewer
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CoffeeCup/glTF-Binary/CoffeeCup.glb"
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              camera-controls
+              interaction-prompt="auto"
+              shadow-intensity="1.5"
+              style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
+            >
+              <button 
+                slot="ar-button" 
+                style={{
+                  position: 'absolute',
+                  bottom: '220px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)',
+                  border: '1px solid #14b8a6',
+                  borderRadius: '30px',
+                  padding: '12px 24px',
+                  color: '#fff',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 20px rgba(13, 148, 136, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  pointerEvents: 'auto',
+                  zIndex: 99
+                }}
+              >
+                <i className="fa-solid fa-expand" style={{ fontSize: '14px' }}></i>
+                🎥 วางแก้วกาแฟบนโต๊ะเรียนจริง (AR Mode)
+              </button>
+            </model-viewer>
+          </div>
+        ) : (
+          <div className="ar-canvas-container">
+            <Canvas
+              camera={{ position: [0, 1.2, 3], fov: 45 }}
+              gl={{ antialias: true, alpha: true }}
+              onCreated={({ gl }) => {
+                gl.setClearColor(0x000000, 0) // Transparent clear color
+              }}
+            >
+              <ambientLight intensity={0.8} />
+              <directionalLight position={[2, 4, 3]} intensity={1.2} />
+              <pointLight position={[-2, 3, -1]} intensity={0.5} />
 
-            {mode === 'qr' ? (
-              <>
-                {activeItem === 'coffeemaker' && <CoffeeMaker onSelectHotspot={setSelectedHotspot} />}
-                {activeItem === 'shaker' && <CocktailShaker onSelectHotspot={setSelectedHotspot} />}
-                {activeItem === 'tray' && <VIPWelcomeTray onSelectHotspot={setSelectedHotspot} />}
-              </>
-            ) : (
-              <AIScannerModel 
-                result={aiResult}
-                onSpeak={(t) => speak(t)}
-                speaking={speaking}
-                recording={sttListening}
-                onStartRecord={startSTT}
-                onStopRecord={stopSTT}
-                score={score}
-                transcript={sttTranscript}
-                speechDiff={speechDiff}
+              {mode === 'qr' ? (
+                <>
+                  {activeItem === 'coffeemaker' && <CoffeeMaker onSelectHotspot={setSelectedHotspot} />}
+                  {activeItem === 'shaker' && <CocktailShaker onSelectHotspot={setSelectedHotspot} />}
+                  {activeItem === 'tray' && <VIPWelcomeTray onSelectHotspot={setSelectedHotspot} />}
+                </>
+              ) : (
+                <AIScannerModel 
+                  result={aiResult}
+                  onSpeak={(t) => speak(t)}
+                  speaking={speaking}
+                  recording={sttListening}
+                  onStartRecord={startSTT}
+                  onStopRecord={stopSTT}
+                  score={score}
+                  transcript={sttTranscript}
+                  speechDiff={speechDiff}
+                />
+              )}
+
+              <OrbitControls
+                enablePan={false}
+                minDistance={1.8}
+                maxDistance={5}
+                maxPolarAngle={Math.PI / 1.8}
+                minPolarAngle={Math.PI / 6}
               />
-            )}
-
-            <OrbitControls
-              enablePan={false}
-              minDistance={1.8}
-              maxDistance={5}
-              maxPolarAngle={Math.PI / 1.8}
-              minPolarAngle={Math.PI / 6}
-            />
-          </Canvas>
-        </div>
+            </Canvas>
+          </div>
+        )
       )}
 
       {/* Reticle Scanner Box Grid */}
@@ -877,7 +998,7 @@ export default function ARScanner() {
 
             {/* Quick Item select */}
             {mode === 'qr' ? (
-              <div className="ar-action-bar">
+              <div className="ar-action-bar" style={{ flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 <button 
                   className={`ar-action-btn ${activeItem === 'coffeemaker' ? 'primary' : ''}`}
                   onClick={() => handleSwitchItem('coffeemaker')}
@@ -885,6 +1006,20 @@ export default function ARScanner() {
                 >
                   <i className="fa-solid fa-mug-hot" aria-hidden="true" /> Espresso Maker
                 </button>
+
+                {unlockedItems.includes('coffeecup') ? (
+                  <button 
+                    className={`ar-action-btn ${activeItem === 'coffeecup' ? 'primary' : ''}`}
+                    onClick={() => handleSwitchItem('coffeecup')}
+                    disabled={isScanning}
+                  >
+                    <i className="fa-solid fa-mug-saucer" aria-hidden="true" /> Coffee Cup (AR)
+                  </button>
+                ) : (
+                  <button className="ar-action-btn" onClick={() => handleScanQR('coffeecup')} disabled={isScanning}>
+                    <i className="fa-solid fa-qrcode" aria-hidden="true" /> Scan QR (Coffee Cup)
+                  </button>
+                )}
 
                 {unlockedItems.includes('shaker') ? (
                   <button 

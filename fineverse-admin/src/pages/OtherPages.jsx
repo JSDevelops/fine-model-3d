@@ -785,84 +785,310 @@ export function AICoach() {
   )
 }
 
-// ── Settings ─────────────────────────────────────────────
 export function Settings() {
   const { dispatch } = useApp()
+  const [activeTab, setActiveTab] = useState('general')
+  const [studentBaseUrl, setStudentBaseUrl] = useState(
+    import.meta.env.VITE_STUDENT_URL || 'http://127.0.0.1:5174'
+  )
+
+  const AR_ITEMS = [
+    { id: 'coffeecup', nameEn: 'Espresso Coffee Cup', nameTh: 'แก้วกาแฟเอสเปรสโซ', icon: 'fa-mug-saucer', desc: 'แก้วเซรามิกขนาดเล็ก (Demitasse) สำหรับเสิร์ฟเอสเปรสโซ' },
+    { id: 'shaker', nameEn: 'Cocktail Shaker', nameTh: 'กระบอกเขย่าค็อกเทล', icon: 'fa-martini-glass-shaker', desc: 'กระบอกโลหะผสมเครื่องดื่มแอลกอฮอล์หรือค็อกเทล' },
+    { id: 'tray', nameEn: 'VIP Welcome Tray', nameTh: 'ถาดต้อนรับ VIP', icon: 'fa-bell', desc: 'ถาดทองสำหรับเสิร์ฟแชมเปญต้อนรับแขกระดับ VIP' },
+    { id: 'coffeemaker', nameEn: 'Espresso Maker', nameTh: 'เครื่องชงเอสเปรสโซ', icon: 'fa-mug-hot', desc: 'เครื่องชงกาแฟระบบอัดแรงดันไอน้ำ' }
+  ]
+
   const PHASES = [
     { label: 'Phase 1', badge: 'teal', title: 'Code refactor', desc: 'Separate LandingPage, Dashboard, Simulation · Dynamic JSON missions · Remove dead code' },
     { label: 'Phase 2', badge: 'teal', title: 'AI Audio', desc: 'Web Speech API STT · speechSynthesis TTS · Real score comparison vs script' },
     { label: 'Phase 3', badge: 'teal', title: 'AR + Cloud', desc: 'AR.js camera · QR scan · Firebase Auth + Firestore · Student portfolio & certificates' },
   ]
+
+  const handlePrintCard = (item) => {
+    const targetUrl = studentBaseUrl.replace(/\/$/, '') + '/ar?item=' + item.id;
+    const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(targetUrl)}`;
+    
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print QR Code - ${item.nameEn}</title>
+          <style>
+            body {
+              font-family: 'Inter', sans-serif;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              margin: 0;
+              background: #fff;
+              color: #000;
+            }
+            .card {
+              border: 3px solid #000;
+              border-radius: 20px;
+              padding: 40px;
+              width: 380px;
+              text-align: center;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+            .logo {
+              font-size: 24px;
+              font-weight: 800;
+              letter-spacing: 1px;
+              margin-bottom: 20px;
+              text-transform: uppercase;
+            }
+            .qr-code {
+              width: 250px;
+              height: 250px;
+              margin: 20px auto;
+              border: 1px solid #eee;
+              padding: 10px;
+              border-radius: 10px;
+            }
+            .title {
+              font-size: 20px;
+              font-weight: 700;
+              margin: 10px 0 5px;
+            }
+            .subtitle {
+              font-size: 14px;
+              color: #555;
+              margin-bottom: 15px;
+            }
+            .instructions {
+              font-size: 12px;
+              color: #777;
+              border-top: 1px dashed #ccc;
+              padding-top: 15px;
+              line-height: 1.5;
+            }
+            @media print {
+              .no-print { display: none; }
+              body { height: auto; }
+              .card { box-shadow: none; border-color: #000; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <div class="logo">FINEVERSE AR</div>
+            <div class="title">${item.nameEn}</div>
+            <div class="subtitle">${item.nameTh}</div>
+            <img class="qr-code" src="${qrImageUrl}" alt="QR Code" />
+            <div class="instructions">
+              <strong>สแกนเพื่อเรียนรู้โมเดล AR 3 มิติ</strong><br/>
+              1. สแกน QR Code ด้วยมือถือเพื่อเปิดแอปนักเรียน<br/>
+              2. กดปุ่ม 'วางแก้วกาแฟบนโต๊ะจริง (AR)' เพื่อเริ่มต้นส่องกล้อง
+            </div>
+          </div>
+          <div style="margin-top: 30px;" class="no-print">
+            <button onclick="window.print()" style="padding: 10px 20px; font-size: 14px; font-weight: bold; background: #000; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Print Now</button>
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-        <Card>
-          <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 14 }}>Platform settings</div>
-          {[
-            { label: 'Platform name', val: 'FINE Model 3D AR+AI', type: 'text' },
-            { label: 'Default language', type: 'select', opts: ['English','Thai'] },
-            { label: 'Session timeout (min)', val: 30, type: 'number' },
-          ].map(f => (
-            <div key={f.label} className="form-group">
-              <label className="form-label">{f.label}</label>
-              {f.type === 'select'
-                ? <select className="form-input">{f.opts.map(o=><option key={o}>{o}</option>)}</select>
-                : <input className="form-input" type={f.type} defaultValue={f.val} />
-              }
-            </div>
-          ))}
-          <div style={{ display:'flex', gap:8 }}>
-            <button className="btn btn-primary btn-sm" onClick={() => {
-              dispatch({ type: 'NOTIFY', payload: { type: 'success', message: 'Settings saved.' } })
-            }}>Save</button>
-            <button className="btn btn-secondary btn-sm" onClick={() => {
-              if (window.confirm('Are you sure you want to reset all data to default mock records? This will erase custom missions and settings.')) {
-                dispatch({ type: 'RESET_DATA' })
-              }
-            }}>Reset database</button>
-          </div>
-        </Card>
-        <Card>
-          <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 14 }}>Firebase / Backend</div>
-          <div className="form-group">
-            <label className="form-label">Auth provider</label>
-            <select className="form-input" value={isFirebaseEnabled ? 'firebase' : 'local'} readOnly>
-              <option value="local">None (local only)</option>
-              <option value="firebase">Firebase Auth (Active)</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label className="form-label">Database</label>
-            <select className="form-input" value={isFirebaseEnabled ? 'firestore' : 'local'} readOnly>
-              <option value="local">In-memory (resets on refresh)</option>
-              <option value="firestore">Firebase Firestore (Active)</option>
-            </select>
-          </div>
-          {isFirebaseEnabled ? (
-            <div style={{ padding:'10px 12px', background:'var(--teal-50)', borderRadius:'var(--radius-md)', fontSize:11, color:'var(--teal-600)', lineHeight:1.6 }}>
-              <i className="fa-solid fa-circle-check" aria-hidden="true" /> Connected to Firebase Cloud Firestore. All data is synchronized in real-time.
-            </div>
-          ) : (
-            <div style={{ padding:'10px 12px', background:'var(--blue-50)', borderRadius:'var(--radius-md)', fontSize:11, color:'var(--blue-600)', lineHeight:1.6 }}>
-              <i className="fa-solid fa-circle-info" aria-hidden="true" /> Running in Local Fallback mode. Add VITE_FIREBASE_* variables to `.env` to enable real-time sync.
-            </div>
-          )}
-        </Card>
+      {/* Settings Navigation Tabs */}
+      <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 8, gap: 16 }}>
+        <button
+          type="button"
+          onClick={() => setActiveTab('general')}
+          style={{
+            background: 'none', border: 'none', borderBottom: activeTab === 'general' ? '2px solid var(--teal-400)' : 'none',
+            padding: '8px 4px', fontSize: 13, fontWeight: 600, color: activeTab === 'general' ? 'var(--text-1)' : 'var(--text-3)',
+            cursor: 'pointer'
+          }}
+        >
+          General Settings
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('ar_qr')}
+          style={{
+            background: 'none', border: 'none', borderBottom: activeTab === 'ar_qr' ? '2px solid var(--teal-400)' : 'none',
+            padding: '8px 4px', fontSize: 13, fontWeight: 600, color: activeTab === 'ar_qr' ? 'var(--text-1)' : 'var(--text-3)',
+            cursor: 'pointer'
+          }}
+        >
+          AR QR Code Generator
+        </button>
       </div>
-      <Card>
-        <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 12 }}>Development roadmap</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
-          {PHASES.map(p => (
-            <div key={p.label} style={{ padding: '12px 14px', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:8 }}>
-                <Badge variant={p.badge}>{p.label}</Badge>
-                <span style={{ fontWeight:500, fontSize:12 }}>{p.title}</span>
+
+      {activeTab === 'general' ? (
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <Card>
+              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 14 }}>Platform settings</div>
+              {[
+                { label: 'Platform name', val: 'FINE Model 3D AR+AI', type: 'text' },
+                { label: 'Default language', type: 'select', opts: ['English','Thai'] },
+                { label: 'Session timeout (min)', val: 30, type: 'number' },
+              ].map(f => (
+                <div key={f.label} className="form-group">
+                  <label className="form-label">{f.label}</label>
+                  {f.type === 'select'
+                    ? <select className="form-input">{f.opts.map(o=><option key={o}>{o}</option>)}</select>
+                    : <input className="form-input" type={f.type} defaultValue={f.val} />
+                  }
+                </div>
+              ))}
+              <div style={{ display:'flex', gap:8 }}>
+                <button className="btn btn-primary btn-sm" onClick={() => {
+                  dispatch({ type: 'NOTIFY', payload: { type: 'success', message: 'Settings saved.' } })
+                }}>Save</button>
+                <button className="btn btn-secondary btn-sm" onClick={() => {
+                  if (window.confirm('Are you sure you want to reset all data to default mock records? This will erase custom missions and settings.')) {
+                    dispatch({ type: 'RESET_DATA' })
+                  }
+                }}>Reset database</button>
               </div>
-              <p style={{ fontSize:11, color:'var(--text-2)', lineHeight:1.6 }}>{p.desc}</p>
+            </Card>
+            <Card>
+              <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 14 }}>Firebase / Backend</div>
+              <div className="form-group">
+                <label className="form-label">Auth provider</label>
+                <select className="form-input" value={isFirebaseEnabled ? 'firebase' : 'local'} readOnly>
+                  <option value="local">None (local only)</option>
+                  <option value="firebase">Firebase Auth (Active)</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Database</label>
+                <select className="form-input" value={isFirebaseEnabled ? 'firestore' : 'local'} readOnly>
+                  <option value="local">In-memory (resets on refresh)</option>
+                  <option value="firestore">Firebase Firestore (Active)</option>
+                </select>
+              </div>
+              {isFirebaseEnabled ? (
+                <div style={{ padding:'10px 12px', background:'var(--teal-50)', borderRadius:'var(--radius-md)', fontSize:11, color:'var(--teal-600)', lineHeight:1.6 }}>
+                  <i className="fa-solid fa-circle-check" aria-hidden="true" /> Connected to Firebase Cloud Firestore. All data is synchronized in real-time.
+                </div>
+              ) : (
+                <div style={{ padding:'10px 12px', background:'var(--blue-50)', borderRadius:'var(--radius-md)', fontSize:11, color:'var(--blue-600)', lineHeight:1.6 }}>
+                  <i className="fa-solid fa-circle-info" aria-hidden="true" /> Running in Local Fallback mode. Add VITE_FIREBASE_* variables to `.env` to enable real-time sync.
+                </div>
+              )}
+            </Card>
+          </div>
+          <Card>
+            <div style={{ fontSize: 13, fontWeight: 500, marginBottom: 12 }}>Development roadmap</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+              {PHASES.map(p => (
+                <div key={p.label} style={{ padding: '12px 14px', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:8 }}>
+                    <Badge variant={p.badge}>{p.label}</Badge>
+                    <span style={{ fontWeight:500, fontSize:12 }}>{p.title}</span>
+                  </div>
+                  <p style={{ fontSize:11, color:'var(--text-2)', lineHeight:1.6 }}>{p.desc}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </Card>
+          </Card>
+        </>
+      ) : (
+        <Card style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>AR Items QR Code Cards</div>
+            <div style={{ fontSize: 12, color: 'var(--text-3)', marginTop: 2 }}>
+              Generate, customize, and print QR codes linked directly to student AR training modules. Place them on classroom desks.
+            </div>
+          </div>
+
+          <div className="form-group" style={{ maxWidth: 450 }}>
+            <label className="form-label" style={{ fontSize: 12, fontWeight: 600 }}>Student App base URL (Domain)</label>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                className="form-input"
+                type="text"
+                value={studentBaseUrl}
+                onChange={e => setStudentBaseUrl(e.target.value)}
+                placeholder="e.g. http://127.0.0.1:5174"
+                style={{ fontSize: 12 }}
+              />
+              <button 
+                className="btn btn-secondary btn-sm" 
+                onClick={() => setStudentBaseUrl(import.meta.env.VITE_STUDENT_URL || 'http://127.0.0.1:5174')}
+              >
+                Reset
+              </button>
+            </div>
+            <span style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 4, display: 'block' }}>
+              Ensure this URL matches the public domain of the student app (e.g., Netlify URL) when testing on mobile devices.
+            </span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16, marginTop: 8 }}>
+            {AR_ITEMS.map(item => {
+              const targetUrl = studentBaseUrl.replace(/\/$/, '') + '/ar?item=' + item.id;
+              const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(targetUrl)}`;
+              return (
+                <div key={item.id} style={{
+                  border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)',
+                  padding: 16, display: 'flex', flexDirection: 'column', gap: 12,
+                  background: 'var(--surface)', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: '50%', background: 'var(--teal-50)',
+                      display: 'flex', alignItems: 'center', justify: 'center', color: 'var(--teal-500)',
+                      flexShrink: 0
+                    }}>
+                      <i className={`fa-solid ${item.icon}`} style={{ margin: 'auto' }} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{item.nameEn}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{item.nameTh}</div>
+                    </div>
+                  </div>
+
+                  <p style={{ fontSize: 11, color: 'var(--text-2)', margin: 0, minHeight: 32, lineHeight: 1.4 }}>
+                    {item.desc}
+                  </p>
+
+                  <div style={{
+                    display: 'flex', justifyContent: 'center', background: '#fff',
+                    padding: 12, borderRadius: 'var(--radius-md)', border: '1px solid var(--border-md)'
+                  }}>
+                    <img 
+                      src={qrImageUrl} 
+                      alt={`${item.nameEn} QR`} 
+                      style={{ width: 140, height: 140, display: 'block' }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        dispatch({ type: 'NOTIFY', payload: { type: 'danger', message: 'Failed to load QR code. Check internet connection.' } });
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 'auto' }}>
+                    <span style={{
+                      fontSize: 9, fontFamily: 'monospace', color: 'var(--text-3)',
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+                    }} title={targetUrl}>
+                      Target: {targetUrl}
+                    </span>
+                    <button 
+                      className="btn btn-primary btn-sm" 
+                      onClick={() => handlePrintCard(item)}
+                      style={{ width: '100%', justifyContent: 'center', gap: 6 }}
+                    >
+                      <i className="fa-solid fa-print" /> Print QR Card
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
     </div>
   )
 }
