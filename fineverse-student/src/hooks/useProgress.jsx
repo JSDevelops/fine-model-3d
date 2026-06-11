@@ -124,7 +124,23 @@ export function ProgressProvider({ children }) {
       // Subscribe to real-time missions collection
       unsubMissions = onSnapshot(collection(db, 'missions'), (snapshot) => {
         let list = []
-        snapshot.forEach(d => list.push(d.data()))
+        snapshot.forEach(d => {
+          const missionData = d.data()
+          if (missionData && !Array.isArray(missionData.steps)) {
+            const count = Number(missionData.steps) || 3
+            missionData.steps = Array.from({ length: count }).map((_, i) => ({
+              id: i + 1,
+              npc: `Welcome! How can I help you today? (Step ${i + 1})`,
+              hint: "Respond politely.",
+              choices: [
+                { text: "Good evening, welcome! Right this way — I'll show you to your table.", correct: true },
+                { text: "Over there.", correct: false }
+              ],
+              keywords: ["welcome"]
+            }))
+          }
+          list.push(missionData)
+        })
         if (list.length > 0) {
           setMissions(list)
         }

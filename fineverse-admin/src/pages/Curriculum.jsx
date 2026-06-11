@@ -1,11 +1,13 @@
 // src/pages/Curriculum.jsx
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useApp } from '../hooks/useAppContext'
 import { Card, Badge } from '../components/ui'
 import './Curriculum.css'
 
 export default function Curriculum() {
   const { state, dispatch } = useApp()
+  const navigate = useNavigate()
   const { curriculum = [], missions = [] } = state
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [formData, setFormData] = useState({ week: 1, title: '', description: '', objectives: '', missionIds: [], mediaUrl: '', mediaType: 'image' })
@@ -130,7 +132,17 @@ export default function Curriculum() {
                 )}
 
                 <div className="week-section">
-                  <h4 className="week-section-title">Linked 3D Scenarios:</h4>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <h4 className="week-section-title" style={{ margin: 0 }}>Linked 3D Scenarios:</h4>
+                    <button 
+                      className="btn btn-secondary btn-sm" 
+                      onClick={() => navigate('/missions', { state: { preselectWeekId: w.id } })}
+                      style={{ padding: '4px 8px', fontSize: 11, display: 'flex', alignItems: 'center', gap: 4 }}
+                    >
+                      <i className="fa-solid fa-wand-magic-sparkles" style={{ color: 'var(--teal-600)' }} />
+                      Create AI Mission
+                    </button>
+                  </div>
                   <div className="linked-missions">
                     {w.missionIds && w.missionIds.length > 0 ? (
                       w.missionIds.map(mid => {

@@ -60,32 +60,239 @@ export const MISSIONS_INITIAL = [
     id: 'm1', sceneId: 'restaurant', name: 'Welcoming Guests',
     description: 'Practice greeting guests warmly and professionally.',
     icon: 'fa-door-open', difficulty: 'easy', status: 'active',
-    passingScore: 60, steps: 4, completionRate: 88,
+    passingScore: 60, completionRate: 88,
+    steps: [
+      {
+        id: 1,
+        npc: 'Good evening! We have a reservation for two under the name Johnson.',
+        hint: 'Greet warmly — use the guest\'s name if possible.',
+        choices: [
+          { text: 'Good evening, welcome! Right this way — I\'ll show you to your table.', correct: true },
+          { text: 'Over there.', correct: false },
+          { text: 'Wait here.', correct: false }
+        ],
+        keywords: ['welcome', 'evening', 'table']
+      },
+      {
+        id: 2,
+        npc: 'Thank you. Could we have a table by the window?',
+        hint: 'Be accommodating. Offer to check or suggest an alternative.',
+        choices: [
+          { text: 'Of course! Let me check — yes, we have a lovely window table available for you.', correct: true },
+          { text: 'No windows are free.', correct: false },
+          { text: 'Just sit anywhere.', correct: false }
+        ],
+        keywords: ['of course', 'window', 'available', 'check']
+      },
+      {
+        id: 3,
+        npc: 'Perfect. Could we see the menu, please?',
+        hint: 'Present the menu with a brief introduction.',
+        choices: [
+          { text: 'Absolutely! Here are your menus. Our chef\'s specials are on the first page — I\'ll be back shortly to take your order.', correct: true },
+          { text: 'Here.', correct: false },
+          { text: 'Menu is on the table.', correct: false }
+        ],
+        keywords: ['menu', 'specials', 'order']
+      },
+      {
+        id: 4,
+        npc: 'This place looks beautiful. Is this your busiest night?',
+        hint: 'Make small talk — be friendly and professional.',
+        choices: [
+          { text: 'Thank you so much! Friday evenings are quite lively — we\'re so glad you chose to join us tonight.', correct: true },
+          { text: 'Yes, very busy.', correct: false },
+          { text: 'I don\'t know.', correct: false }
+        ],
+        keywords: ['thank', 'glad', 'evening']
+      }
+    ]
   },
   {
     id: 'm2', sceneId: 'restaurant', name: 'Taking Food Orders',
     description: 'Learn to take orders accurately and suggest alternatives.',
     icon: 'fa-clipboard-list', difficulty: 'medium', status: 'active',
-    passingScore: 60, steps: 6, completionRate: 74,
+    passingScore: 60, completionRate: 74,
+    steps: [
+      {
+        id: 1,
+        npc: 'Excuse me, are you ready to take our order?',
+        hint: 'Always confirm readiness with a positive response.',
+        choices: [
+          { text: 'Of course! I\'ll be happy to take your order now. What would you like to start with?', correct: true },
+          { text: 'Wait a moment please.', correct: false },
+          { text: 'Yes, one second.', correct: false }
+        ],
+        keywords: ['of course', 'happy', 'order', 'start']
+      },
+      {
+        id: 2,
+        npc: 'What do you recommend today?',
+        hint: 'Mention the chef\'s special and why it\'s popular.',
+        choices: [
+          { text: 'Our chef\'s special today is pan-seared salmon with lemon butter sauce — it\'s absolutely wonderful.', correct: true },
+          { text: 'Everything is good.', correct: false },
+          { text: 'I don\'t know, check the menu.', correct: false }
+        ],
+        keywords: ['special', 'salmon', 'recommend', 'chef']
+      },
+      {
+        id: 3,
+        npc: 'Does the pasta contain any nuts? My partner has an allergy.',
+        hint: 'Always offer to verify — never guess about allergens.',
+        choices: [
+          { text: 'That\'s very important — let me check with the kitchen for you right away to confirm.', correct: true },
+          { text: 'I think it\'s fine.', correct: false },
+          { text: 'No nuts.', correct: false }
+        ],
+        keywords: ['check', 'kitchen', 'confirm', 'important']
+      },
+      {
+        id: 4,
+        npc: 'I\'ll have the salmon, and she\'ll have the pasta please.',
+        hint: 'Repeat the order to confirm accuracy.',
+        choices: [
+          { text: 'Wonderful choices! So that\'s one pan-seared salmon and one pasta — I\'ll get that started for you.', correct: true },
+          { text: 'OK.', correct: false },
+          { text: 'Noted.', correct: false }
+        ],
+        keywords: ['wonderful', 'salmon', 'pasta', 'started']
+      },
+      {
+        id: 5,
+        npc: 'Can we also have some bread while we wait?',
+        hint: 'Say yes and give a time estimate.',
+        choices: [
+          { text: 'Certainly! I\'ll bring a basket of fresh bread right away for you.', correct: true },
+          { text: 'Okay, one moment.', correct: false },
+          { text: 'We\'ll see.', correct: false }
+        ],
+        keywords: ['certainly', 'fresh', 'right away', 'bread']
+      },
+      {
+        id: 6,
+        npc: 'Could I have the bill, please?',
+        hint: 'Thank the guest and close the interaction professionally.',
+        choices: [
+          { text: 'Of course! I\'ll bring your bill immediately. Thank you so much for dining with us this evening.', correct: true },
+          { text: 'One moment.', correct: false },
+          { text: 'Pay at the counter.', correct: false }
+        ],
+        keywords: ['of course', 'immediately', 'thank', 'dining']
+      }
+    ]
   },
   {
     id: 'm3', sceneId: 'restaurant', name: 'Beverage Recommendation',
     description: 'Suggest wines and drinks that complement dishes.',
     icon: 'fa-wine-glass', difficulty: 'medium', status: 'draft',
-    passingScore: 60, steps: 5, completionRate: 61,
+    passingScore: 60, completionRate: 61,
+    steps: [
+      {
+        id: 1,
+        npc: 'We\'d like some wine — do you have any recommendations?',
+        hint: 'Ask about their main course to pair correctly.',
+        choices: [
+          { text: 'I\'d love to help! Could I ask what you\'re having for your main course so I can suggest the perfect pairing?', correct: true },
+          { text: 'We have red and white wine.', correct: false },
+          { text: 'Check the wine list.', correct: false }
+        ],
+        keywords: ['help', 'main course', 'pairing', 'suggest']
+      },
+      {
+        id: 2,
+        npc: 'We\'re having the salmon and the steak.',
+        hint: 'Suggest specific wines for each dish.',
+        choices: [
+          { text: 'Excellent choices! For the salmon I\'d suggest our Chablis, and for the steak our Cabernet Sauvignon is superb.', correct: true },
+          { text: 'Both are fine with red.', correct: false },
+          { text: 'Whatever you prefer.', correct: false }
+        ],
+        keywords: ['suggest', 'Chablis', 'Cabernet', 'superb']
+      },
+      {
+        id: 3,
+        npc: 'We\'ll try the Cabernet. Could you tell us more about it?',
+        hint: 'Describe the wine\'s character and origin briefly.',
+        choices: [
+          { text: 'Our Cabernet Sauvignon is from a premium Napa Valley estate — rich with dark berry notes and a smooth, long finish.', correct: true },
+          { text: 'It\'s a red wine.', correct: false },
+          { text: 'It\'s very good.', correct: false }
+        ],
+        keywords: ['Napa', 'berry', 'finish', 'rich']
+      }
+    ]
   },
   {
     id: 'm4', sceneId: 'vip', name: 'VIP Guest Check-in',
     description: 'Handle high-end guest check-in with full VIP protocol.',
     icon: 'fa-crown', difficulty: 'hard', status: 'active',
-    passingScore: 70, steps: 8, completionRate: 52,
+    passingScore: 70, completionRate: 52,
+    steps: [
+      {
+        id: 1,
+        npc: 'Good evening. I\'m Mr. Harrison — I believe you have a reservation for me.',
+        hint: 'Address VIP guests by name immediately. Show recognition.',
+        choices: [
+          { text: 'Good evening, Mr. Harrison! We\'ve been expecting you. Welcome to our VIP lounge — allow me to personally escort you.', correct: true },
+          { text: 'Let me check your booking.', correct: false },
+          { text: 'Name and ID please.', correct: false }
+        ],
+        keywords: ['expecting', 'welcome', 'personally', 'escort']
+      },
+      {
+        id: 2,
+        npc: 'I had requested a private seating area away from the main room.',
+        hint: 'Confirm the special request was prepared in advance.',
+        choices: [
+          { text: 'Absolutely, Mr. Harrison — your private suite has been prepared exactly to your specifications.', correct: true },
+          { text: 'Let me check if it\'s available.', correct: false },
+          { text: 'We\'ll do our best.', correct: false }
+        ],
+        keywords: ['absolutely', 'prepared', 'specifications', 'private']
+      },
+      {
+        id: 3,
+        npc: 'Excellent. I\'ll also need your sommelier to attend to us this evening.',
+        hint: 'Confirm and offer a time if possible.',
+        choices: [
+          { text: 'Of course! Our head sommelier will attend to you personally within the next five minutes.', correct: true },
+          { text: 'The sommelier might be busy.', correct: false },
+          { text: 'I\'ll try to arrange that.', correct: false }
+        ],
+        keywords: ['of course', 'sommelier', 'personally', 'minutes']
+      },
+      {
+        id: 4,
+        npc: 'Also, please ensure my calls are not disturbed during dinner.',
+        hint: 'Acknowledge clearly and explain how it will be managed.',
+        choices: [
+          { text: 'Understood, Mr. Harrison. I\'ll ensure the front desk holds all your calls and messages until you\'ve finished dining.', correct: true },
+          { text: 'We\'ll try.', correct: false },
+          { text: 'You can turn your phone off.', correct: false }
+        ],
+        keywords: ['understood', 'hold', 'messages', 'dining']
+      }
+    ]
   },
   {
     id: 'm5', sceneId: 'vip', name: 'Lounge Ambience Briefing',
     description: 'Explain the lounge setting and amenities to guests.',
     icon: 'fa-music', difficulty: 'easy', status: 'inactive',
-    passingScore: 60, steps: 3, completionRate: 33,
-  },
+    passingScore: 60, completionRate: 33,
+    steps: [
+      {
+        id: 1,
+        npc: "Welcome to the VIP Lounge! Let me explain our amenities.",
+        hint: "Welcome the guest and mention refreshments.",
+        choices: [
+          { text: "Welcome! We offer complimentary drinks and snacks at the buffet area.", correct: true },
+          { text: "Just stay here.", correct: false }
+        ],
+        keywords: ["welcome", "complimentary", "drinks"]
+      }
+    ]
+  }
 ]
 
 export const STUDENTS_INITIAL = [

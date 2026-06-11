@@ -57,8 +57,10 @@ function reducer(state, action) {
       return { ...state, quizzes: action.payload }
     case 'SET_SCENES':
       return { ...state, scenes: action.payload }
-    case 'ADD_MISSION':
-      return { ...state, missions: [...state.missions, { ...action.payload, id: 'm' + Date.now() }] }
+    case 'ADD_MISSION': {
+      const id = action.payload.id || 'm' + Date.now()
+      return { ...state, missions: [...state.missions, { ...action.payload, id }] }
+    }
     case 'UPDATE_MISSION':
       return { ...state, missions: state.missions.map(m => m.id === action.payload.id ? action.payload : m) }
     case 'DELETE_MISSION':
@@ -257,7 +259,7 @@ export function AppProvider({ children }) {
       try {
         switch (action.type) {
           case 'ADD_MISSION': {
-            const newId = 'm' + Date.now()
+            const newId = action.payload.id || 'm' + Date.now()
             const missionData = { ...action.payload, id: newId }
             await setDoc(doc(db, 'missions', newId), missionData)
             break
