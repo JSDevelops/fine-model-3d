@@ -711,12 +711,12 @@ export function Scores() {
     </div>
   )
 }
-
 // ── AI Coach ────────────────────────────────────────────
 export function AICoach() {
   const AI_STATUS = [
     { name: 'Speech-to-Text (STT)', status: 'Active',   badge: 'teal', phase: 'Phase 2', note: 'Web Speech API STT' },
     { name: 'Text-to-Speech (TTS)', status: 'Active',   badge: 'teal', phase: 'Phase 2', note: 'speechSynthesis TTS' },
+    { name: 'AI Dialogue Generator', status: 'Active',  badge: 'teal', phase: 'Phase 3', note: 'Gemini 1.5 Flash API (Structured Dialogue generation)' },
     { name: 'AR Camera Overlay',    status: 'Active',   badge: 'teal', phase: 'Phase 3', note: 'Three.js procedural models + Webcam' },
     { name: 'QR Code Simulator',    status: 'Active',   badge: 'teal', phase: 'Phase 3', note: 'Web Audio API scan effect' },
     { name: 'Score evaluation',     status: 'Active',   badge: 'teal', phase: 'Phase 2', note: 'Keyword matching + overlap checks' },
