@@ -1052,6 +1052,7 @@ export default function DocsPage() {
               <ArrowLeft className="w-3.5 h-3.5" /> กลับหน้าหลักพอร์ทัล
             </Link>
             <div className="h-4 w-px bg-white/10" />
+            <img src="/logo.png" alt="FINEVERSE Logo" className="w-6 h-6 object-contain rounded-md shadow bg-slate-950/20" />
             <span className="font-heading text-sm font-black tracking-wider text-white">FINEVERSE DOCS</span>
           </div>
           <span className="text-[9px] uppercase bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20 px-2.5 py-0.5 rounded-full tracking-widest">
