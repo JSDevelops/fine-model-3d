@@ -48,9 +48,17 @@ export default function LandingPage() {
             </div>
             <span className="font-heading text-sm font-black tracking-wider text-white">FINEVERSE</span>
           </div>
-          <span className="text-[10px] uppercase bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20 px-2.5 py-0.5 rounded-full tracking-widest animate-pulse">
-            SMART HOSPITALITY SUITE
-          </span>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/docs"
+              className="text-[10px] text-slate-300 hover:text-amber-400 font-bold bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-1.5 rounded-full transition flex items-center gap-1.5"
+            >
+              <BookOpen className="w-3.5 h-3.5" /> คู่มือการใช้งาน (Docs)
+            </Link>
+            <span className="text-[10px] uppercase bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20 px-2.5 py-0.5 rounded-full tracking-widest animate-pulse">
+              SMART HOSPITALITY SUITE
+            </span>
+          </div>
         </div>
       </header>
 
