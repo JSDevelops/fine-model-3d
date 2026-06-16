@@ -72,9 +72,9 @@ export default function DocsPage() {
   ]
 
   const credentials = [
-    { role: "นักเรียน (Student)", email: "student.siriwan@fineverse.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "สวมบทบาทเป็นผู้เรียนในการหมุนภาพโฮโลแกรม 3D, ใช้กล้อง AI Scanner ถ่ายภาพวิเคราะห์อุปกรณ์จริง, ฝึกสนทนาโต้ตอบเสียงสตรีมมิ่งสองทางกับ AI Coach, และประเมิน Rubrics ทักษะ" },
-    { role: "ครูผู้สอน (Teacher)", email: "pimjai@fineverse.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "ใช้ออกแบบหลักสูตรวิชาบริการอาหารโรงแรมรายสัปดาห์ (F-I-N-E), กำหนด Prompt ทิศทางการแนะแนวของ AI Coach, ตรวจสอบรายงานผลสัมฤทธิ์ของนักเรียนรายห้อง, และออกแบบโมเดล 3D แบบเรียลไทม์" },
-    { role: "ผู้ดูแลระบบ (Admin)", email: "admin@fineverse.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "ใช้ควบคุมผังการเชื่อมโยงระบบ (System Diagram), กำหนดสวิตช์เปิด-ปิดสิทธิ์แยกตามผู้ใช้ และสังเกตโครงสร้างตารางฐานข้อมูลหลักใน MySQL" }
+    { role: "นักเรียน (Student)", email: "student.siriwan@fine-model.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "สวมบทบาทเป็นผู้เรียนในการหมุนภาพโฮโลแกรม 3D, ใช้กล้อง AI Scanner ถ่ายภาพวิเคราะห์อุปกรณ์จริง, ฝึกสนทนาโต้ตอบเสียงสตรีมมิ่งสองทางกับ AI Coach, และประเมิน Rubrics ทักษะ" },
+    { role: "ครูผู้สอน (Teacher)", email: "pimjai@fine-model.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "ใช้ออกแบบหลักสูตรวิชาบริการอาหารโรงแรมรายสัปดาห์ (F-I-N-E), กำหนด Prompt ทิศทางการแนะแนวของ AI Coach, ตรวจสอบรายงานผลสัมฤทธิ์ของนักเรียนรายห้อง, และออกแบบโมเดล 3D แบบเรียลไทม์" },
+    { role: "ผู้ดูแลระบบ (Admin)", email: "admin@fine-model.com", password: "รหัสผ่านใดก็ได้ (เช่น 123456)", desc: "ใช้ควบคุมผังการเชื่อมโยงระบบ (System Diagram), กำหนดสวิตช์เปิด-ปิดสิทธิ์แยกตามผู้ใช้ และสังเกตโครงสร้างตารางฐานข้อมูลหลัก in MySQL" }
   ]
 
   const dbTables = {
@@ -338,7 +338,7 @@ export default function DocsPage() {
                 <span className="text-[9px] uppercase tracking-wider bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20 px-2 py-0.5 rounded-full font-mono">ขั้นตอนที่ 2</span>
                 <h3 className="text-xs font-bold text-white mt-1">กรอกข้อมูลบัญชีเพื่อสวมบทบาท</h3>
                 <p className="text-slate-400 text-[11px]">
-                  กรอกอีเมลนักเรียนทดสอบ: <code className="bg-black/40 px-1 py-0.5 rounded font-mono text-cyan-400 font-semibold">student.siriwan@fineverse.com</code> และกรอกรหัสผ่านใดๆ จากนั้นคลิกปุ่มสีน้ำเงิน **"Sign In"** เพื่ออนุญาตเข้าถึง
+                  กรอกอีเมลนักเรียนทดสอบ: <code className="bg-black/40 px-1 py-0.5 rounded font-mono text-cyan-400 font-semibold">student.siriwan@fine-model.com</code> และกรอกรหัสผ่านใดๆ จากนั้นคลิกปุ่มสีน้ำเงิน **"Sign In"** เพื่ออนุญาตเข้าถึง
                 </p>
               </div>
 
@@ -880,9 +880,9 @@ export default function DocsPage() {
                   รายชื่อเจ้าหน้าที่ที่ลงทะเบียนสิทธิ์แอดมินและครูผู้ดูแลวิชาเรียน:
                 </p>
                 <ul className="list-disc pl-5 text-slate-300 text-[11px] space-y-1">
-                  <li><strong>สุทธิพจน์ ดีเลิศ (ADMIN):</strong> อีเมลเข้าใช้งาน `admin@fineverse.com` (สิทธิ์ Operator สูงสุด)</li>
-                  <li><strong>ครูพิมพ์ใจ แสนดี (TEACHER):</strong> อีเมลเข้าใช้งาน `pimjai@fineverse.com` (สิทธิ์จัดโครงสร้างแผนการสอนและคลัง 3D)</li>
-                  <li><strong>สิริวัลย์ เจริญดี (STUDENT):</strong> อีเมลเข้าใช้งาน `student.siriwan@fineverse.com` (สิทธิ์ผู้เรียนสแกนและโต้ตอบเสียงสด)</li>
+                  <li><strong>สุทธิพจน์ ดีเลิศ (ADMIN):</strong> อีเมลเข้าใช้งาน `admin@fine-model.com` (สิทธิ์ Operator สูงสุด)</li>
+                  <li><strong>ครูพิมพ์ใจ แสนดี (TEACHER):</strong> อีเมลเข้าใช้งาน `pimjai@fine-model.com` (สิทธิ์จัดโครงสร้างแผนการสอนและคลัง 3D)</li>
+                  <li><strong>สิริวัลย์ เจริญดี (STUDENT):</strong> อีเมลเข้าใช้งาน `student.siriwan@fine-model.com` (สิทธิ์ผู้เรียนสแกนและโต้ตอบเสียงสด)</li>
                 </ul>
               </div>
 
@@ -1052,8 +1052,8 @@ export default function DocsPage() {
               <ArrowLeft className="w-3.5 h-3.5" /> กลับหน้าหลักพอร์ทัล
             </Link>
             <div className="h-4 w-px bg-white/10" />
-            <img src="/logo.png" alt="FINEVERSE Logo" className="w-6 h-6 object-contain rounded-md shadow bg-slate-950/20" />
-            <span className="font-heading text-sm font-black tracking-wider text-white">FINEVERSE DOCS</span>
+            <img src="/logo.png" alt="FINE-MODEL Logo" className="w-6 h-6 object-contain rounded-md shadow bg-slate-950/20" />
+            <span className="font-heading text-sm font-black tracking-wider text-white">FINE-MODEL DOCS</span>
           </div>
           <span className="text-[9px] uppercase bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20 px-2.5 py-0.5 rounded-full tracking-widest">
             User Guide v1.2

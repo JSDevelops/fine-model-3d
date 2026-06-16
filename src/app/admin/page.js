@@ -20,11 +20,11 @@ export default function AdminPage() {
       setLoginError('กรุณากรอกอีเมลและรหัสผ่าน')
       return
     }
-    if (email.toLowerCase().includes('admin') || email.toLowerCase() === 'admin@fineverse.com') {
+    if (email.toLowerCase().includes('admin') || email.toLowerCase() === 'admin@fine-model.com') {
       setIsLoggedIn(true)
       setLoginError('')
     } else {
-      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: admin@fineverse.com)')
+      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: admin@fine-model.com)')
     }
   }
 
@@ -87,7 +87,7 @@ export default function AdminPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@fineverse.com"
+                    placeholder="admin@fine-model.com"
                     className="w-full bg-slate-950/80 border border-white/5 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-amber-500 font-mono"
                   />
                 </div>

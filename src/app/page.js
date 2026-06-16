@@ -43,8 +43,8 @@ export default function LandingPage() {
       <header className="glass-panel border-b border-white/5 py-4 px-6 relative z-10">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="FINEVERSE Logo" className="w-9 h-9 object-contain rounded-lg shadow-[0_0_10px_rgba(212,175,55,0.15)] bg-slate-950/20" />
-            <span className="font-heading text-sm font-black tracking-wider text-white">FINEVERSE</span>
+            <img src="/logo.png" alt="FINE-MODEL Logo" className="w-9 h-9 object-contain rounded-lg shadow-[0_0_10px_rgba(212,175,55,0.15)] bg-slate-950/20" />
+            <span className="font-heading text-sm font-black tracking-wider text-white">FINE-MODEL</span>
           </div>
           <div className="flex items-center gap-3">
             <Link

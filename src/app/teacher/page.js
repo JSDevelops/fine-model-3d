@@ -22,11 +22,11 @@ export default function TeacherPage() {
       setLoginError('กรุณากรอกอีเมลและรหัสผ่าน')
       return
     }
-    if (email.toLowerCase().includes('teacher') || email.toLowerCase() === 'pimjai@fineverse.com') {
+    if (email.toLowerCase().includes('teacher') || email.toLowerCase() === 'pimjai@fine-model.com') {
       setIsLoggedIn(true)
       setLoginError('')
     } else {
-      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: pimjai@fineverse.com)')
+      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: pimjai@fine-model.com)')
     }
   }
 
@@ -81,7 +81,7 @@ export default function TeacherPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="pimjai@fineverse.com"
+                    placeholder="pimjai@fine-model.com"
                     className="w-full bg-slate-950/80 border border-white/5 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-amber-500"
                   />
                 </div>

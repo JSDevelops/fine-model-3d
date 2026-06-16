@@ -5,9 +5,9 @@ import { Shield, Users, Check, AlertCircle, ToggleLeft, ToggleRight } from 'luci
 
 export default function UserAccess() {
   const [users, setUsers] = useState([
-    { name: "สุทธิพจน์ ดีเลิศ", role: "ADMIN", email: "admin@fineverse.com", status: "Active" },
-    { name: "ครูพิมพ์ใจ แสนดี", role: "TEACHER", email: "pimjai@fineverse.com", status: "Active" },
-    { name: "สิริวัลย์ เจริญดี", role: "STUDENT", email: "student.siriwan@fineverse.com", status: "Active" }
+    { name: "สุทธิพจน์ ดีเลิศ", role: "ADMIN", email: "admin@fine-model.com", status: "Active" },
+    { name: "ครูพิมพ์ใจ แสนดี", role: "TEACHER", email: "pimjai@fine-model.com", status: "Active" },
+    { name: "สิริวัลย์ เจริญดี", role: "STUDENT", email: "student.siriwan@fine-model.com", status: "Active" }
   ])
 
   const [permissions, setPermissions] = useState({

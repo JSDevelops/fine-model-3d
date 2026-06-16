@@ -28,11 +28,11 @@ export default function StudentPage() {
       return
     }
     // Simulate validation
-    if (email.toLowerCase().includes('student') || email.toLowerCase() === 'student.siriwan@fineverse.com') {
+    if (email.toLowerCase().includes('student') || email.toLowerCase() === 'student.siriwan@fine-model.com') {
       setIsLoggedIn(true)
       setLoginError('')
     } else {
-      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: student.siriwan@fineverse.com)')
+      setLoginError('อีเมลผู้ใช้งานไม่ถูกต้อง (แนะนำใช้: student.siriwan@fine-model.com)')
     }
   }
 
@@ -84,7 +84,7 @@ export default function StudentPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="student.siriwan@fineverse.com"
+                    placeholder="student.siriwan@fine-model.com"
                     className="w-full bg-slate-950/80 border border-white/5 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-amber-500"
                   />
                 </div>
