@@ -1,8 +1,122 @@
 "use client";
 
 import React, { useState, useEffect } from 'react'
-import { Plus, Trash2, Save, Info, RefreshCw, Layers, Sparkles } from 'lucide-react'
+import { Plus, Trash2, Save, Info, RefreshCw, Layers, Sparkles, Key, QrCode } from 'lucide-react'
 import ARScene from '../3d/ARScene'
+import QRModal from './QRModal'
+
+const MOCK_GENERATION_ITEMS = [
+  {
+    keywords: ["แก้วไวน์", "wine glass", "wineglass", "ไวน์"],
+    title: "Red Wine Glass",
+    thai: "แก้วไวน์แดง",
+    pronunciation: "/red-wyn-glass/",
+    description: "แก้วก้านบางที่มีกระเปาะกว้างสำหรับใส่ไวน์แดง เพื่อช่วยให้กลิ่นของไวน์ฟุ้งกระจายได้ดี",
+    sentence: "Hold the red wine glass by the stem to keep the wine cool.",
+    shapeType: "cylinder",
+    shapeColor: "#ffffff",
+    sizeW: 0.25,
+    sizeH: 0.65,
+    sizeD: 0.25,
+    quizQ: "เพราะเหตุใดจึงควรจับแก้วไวน์บริเวณก้านแก้ว?",
+    ansCorrect: "เพื่อไม่ให้ความร้อนจากมือเปลี่ยนอุณหภูมิไวน์",
+    ansWrong1: "เพื่อความสวยงามเพียงอย่างเดียว",
+    ansWrong2: "เพื่อไม่ให้แก้วตกแตก"
+  },
+  {
+    keywords: ["แก้วกาแฟ", "coffee cup", "coffee mug", "ถ้วยกาแฟ", "กาแฟ"],
+    title: "Coffee Mug",
+    thai: "แก้วกาแฟมีหู",
+    pronunciation: "/kof-fee mug/",
+    description: "ถ้วยแก้วหนาพร้อมหูจับสำหรับเครื่องดื่มร้อน เช่น กาแฟ หรือ ชาร้อน",
+    sentence: "Serve the hot Americano in this coffee mug with the handle facing right.",
+    shapeType: "cylinder",
+    shapeColor: "#d97706",
+    sizeW: 0.3,
+    sizeH: 0.4,
+    sizeD: 0.3,
+    quizQ: "การเสิร์ฟกาแฟร้อนในแก้วมีหู ควรหันหูจับไปทิศทางใดของลูกค้า?",
+    ansCorrect: "ด้านขวามือของลูกค้า",
+    ansWrong1: "ด้านซ้ายมือของลูกค้า",
+    ansWrong2: "หันเข้าหาตัวผู้เสิร์ฟ"
+  },
+  {
+    keywords: ["ช้อนซุป", "soup spoon", "ช้อน"],
+    title: "Soup Spoon",
+    thai: "ช้อนซุป",
+    pronunciation: "/soop spoon/",
+    description: "ช้อนทรงกลมใหญ่และลึกเป็นพิเศษสำหรับตักซุปทานได้ง่าย",
+    sentence: "The soup spoon should be placed on the right side of the plate.",
+    shapeType: "sphere",
+    shapeColor: "#94a3b8",
+    sizeW: 0.2,
+    sizeH: 0.2,
+    sizeD: 0.2,
+    quizQ: "ช้อนซุปควรจัดวางไว้ตำแหน่งใดของโต๊ะอาหารหลัก?",
+    ansCorrect: "ด้านขวามือของจานหลัก",
+    ansWrong1: "ด้านบนของจานหลัก",
+    ansWrong2: "ด้านซ้ายมือของจานหลัก"
+  },
+  {
+    keywords: ["มีด", "มีดหั่นสเต็ก", "steak knife", "knife"],
+    title: "Steak Knife",
+    thai: "มีดสเต็ก",
+    pronunciation: "/stake nyf/",
+    description: "มีดที่มีฟันหยักคมพิเศษสำหรับใช้หั่นเนื้อสเต็กบนโต๊ะอาหาร",
+    sentence: "We provide a sharp steak knife for all main meat dishes.",
+    shapeType: "box",
+    shapeColor: "#475569",
+    sizeW: 0.1,
+    sizeH: 0.7,
+    sizeD: 0.1,
+    quizQ: "มีดสเต็กควรวางโดยหันใบมีดคมไปทางทิศใด?",
+    ansCorrect: "หันคมมีดเข้าหาจานอาหาร",
+    ansWrong1: "หันคมมีดออกนอกโต๊ะ",
+    ansWrong2: "หันคมมีดขึ้นด้านบน"
+  },
+  {
+    keywords: ["ผ้าเช็ดปาก", "napkin", "ผ้าเช็ด"],
+    title: "Table Napkin",
+    thai: "ผ้าเช็ดปาก",
+    pronunciation: "/tay-bul nap-kin/",
+    description: "ผ้าสี่เหลี่ยมผืนผ้าสำหรับบริการลูกค้าเช็ดปากและนิ้วมือระหว่างมื้ออาหาร",
+    sentence: "Kindly unfold the napkin and place it on your lap.",
+    shapeType: "box",
+    shapeColor: "#f1f5f9",
+    sizeW: 0.5,
+    sizeH: 0.05,
+    sizeD: 0.5,
+    quizQ: "ผ้าเช็ดปากควรได้รับการคลี่และวางไว้ส่วนใดของร่างกายลูกค้า?",
+    ansCorrect: "วางบนหน้าตัก",
+    ansWrong1: "พาดไว้ที่บ่า",
+    ansWrong2: "ผูกไว้ที่ลำคอ"
+  }
+];
+
+const findMockItem = (prompt) => {
+  const cleanPrompt = prompt.toLowerCase().trim();
+  for (const item of MOCK_GENERATION_ITEMS) {
+    if (item.keywords.some(keyword => cleanPrompt.includes(keyword))) {
+      return item;
+    }
+  }
+  return {
+    title: "Champagne Flute",
+    thai: "แก้วแชมเปญ",
+    pronunciation: "/sham-payn floot/",
+    description: "แก้วทรงเรียวยาวและแคบสำหรับใส่แชมเปญ ช่วยเก็บรักษาฟองพรายอากาศ",
+    sentence: "Pour the sparkling champagne into the flute glass.",
+    shapeType: "cylinder",
+    shapeColor: "#e2e8f0",
+    sizeW: 0.2,
+    sizeH: 0.7,
+    sizeD: 0.2,
+    quizQ: "รูปทรงของแก้วแชมเปญฟลูตมีจุดประสงค์หลักเพื่ออะไร?",
+    ansCorrect: "รักษาความเย็นและฟองอากาศ",
+    ansWrong1: "ทำให้ถือได้สะดวกที่สุด",
+    ansWrong2: "เพื่อเพิ่มความจุของเครื่องดื่ม"
+  };
+};
 
 export default function ARItemsManager() {
   const [items, setItems] = useState([])
@@ -28,6 +142,131 @@ export default function ARItemsManager() {
   const [ansWrong2, setAnsWrong2] = useState('')
 
   const [message, setMessage] = useState('')
+  const [qrItem, setQrItem] = useState(null)
+
+  // Gemini AI States
+  const [aiPrompt, setAiPrompt] = useState('')
+  const [isAiGenerating, setIsAiGenerating] = useState(false)
+  const [aiMessage, setAiMessage] = useState('')
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false)
+  const [customApiKey, setCustomApiKey] = useState('')
+
+  const handleGenerateWithAI = async () => {
+    if (!aiPrompt.trim()) {
+      alert('กรุณากรอกชื่ออุปกรณ์ที่ต้องการให้ AI ช่วยออกแบบ')
+      return
+    }
+
+    setIsAiGenerating(true)
+    setAiMessage('กำลังส่งข้อมูลให้ Gemini AI วิเคราะห์...')
+
+    const apiKey = customApiKey || process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''
+
+    if (apiKey) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `You are an AI assistant designed for a hospitality training application.
+Generate a structured JSON configuration for a hotel/restaurant service equipment based on this request: "${aiPrompt}".
+Respond ONLY in valid JSON format using this exact schema:
+{
+  "title": "English Name of the equipment (e.g. Red Wine Glass)",
+  "thai": "ชื่อภาษาไทยกระชับ (เช่น แก้วไวน์แดง)",
+  "pronunciation": "/English pronunciation spelling for Thai students (e.g. /red-wyn-glass/)/",
+  "description": "คำอธิบายวัตถุนี้สั้นๆ ในภาษาไทย 1-2 ประโยค เกี่ยวกับลักษณะและการใช้งาน",
+  "sentence": "A practical example sentence that hotel staff would say using this object in English.",
+  "shapeType": "Choose one: 'box' or 'cylinder' or 'sphere'",
+  "shapeColor": "A suitable hex color code for the 3D model (e.g. '#94a3b8' or '#ffffff' or '#d4af37')",
+  "sizeW": 0.4,
+  "sizeH": 0.6,
+  "sizeD": 0.6,
+  "quizQ": "คำถามทบทวนสั้นๆ ในภาษาไทยเกี่ยวกับอุปกรณ์นี้",
+  "ansCorrect": "Correct English answer (matching the title or closely related word)",
+  "ansWrong1": "Incorrect English answer option 1",
+  "ansWrong2": "Incorrect English answer option 2"
+}
+Do not wrap your response in markdown code blocks or any extra text.`
+                    }
+                  ]
+                }
+              ],
+              generationConfig: {
+                responseMimeType: 'application/json'
+              }
+            })
+          }
+        )
+
+        const resData = await response.json()
+        const rawText = resData.candidates?.[0]?.content?.parts?.[0]?.text || ''
+        const parsed = JSON.parse(rawText)
+
+        setTitle(parsed.title || '')
+        setThai(parsed.thai || '')
+        setPronunciation(parsed.pronunciation || '')
+        setDescription(parsed.description || '')
+        setSentence(parsed.sentence || '')
+        setShapeType(parsed.shapeType || 'box')
+        setShapeColor(parsed.shapeColor || '#d4af37')
+        setSizeW(parsed.sizeW || 0.6)
+        setSizeH(parsed.sizeH || 0.6)
+        setSizeD(parsed.sizeD || 0.6)
+        setQuizQ(parsed.quizQ || '')
+        setAnsCorrect(parsed.ansCorrect || '')
+        setAnsWrong1(parsed.ansWrong1 || '')
+        setAnsWrong2(parsed.ansWrong2 || '')
+
+        setAiMessage('✨ ดึงข้อมูลจาก Gemini AI และกรอกลงฟอร์มเรียบร้อยแล้ว!')
+        setAiPrompt('')
+      } catch (err) {
+        console.error("Gemini API Error:", err)
+        setAiMessage('⚠️ การเรียก API ผิดพลาด กำลังดึงข้อมูลจากระบบจำลอง (Mock Fallback)...')
+        setTimeout(() => {
+          applyMockData()
+        }, 1500)
+      } finally {
+        setIsAiGenerating(false)
+        setTimeout(() => setAiMessage(''), 4000)
+      }
+    } else {
+      setAiMessage('ℹ️ ไม่พบคีย์ Gemini API กำลังกรอกข้อมูลดึงจากระบบจำลอง (Mock Fallback)...')
+      setTimeout(() => {
+        applyMockData()
+        setIsAiGenerating(false)
+        setTimeout(() => setAiMessage(''), 4000)
+      }, 1200)
+    }
+  }
+
+  const applyMockData = () => {
+    const matched = findMockItem(aiPrompt)
+    setTitle(matched.title)
+    setThai(matched.thai)
+    setPronunciation(matched.pronunciation)
+    setDescription(matched.description)
+    setSentence(matched.sentence)
+    setShapeType(matched.shapeType)
+    setShapeColor(matched.shapeColor)
+    setSizeW(matched.sizeW)
+    setSizeH(matched.sizeH)
+    setSizeD(matched.sizeD)
+    setQuizQ(matched.quizQ)
+    setAnsCorrect(matched.ansCorrect)
+    setAnsWrong1(matched.ansWrong1)
+    setAnsWrong2(matched.ansWrong2)
+    setAiMessage('✨ กรอกข้อมูลจำลองสำหรับ "' + matched.thai + '" เรียบร้อยแล้ว!')
+    setAiPrompt('')
+  }
 
   // Load items from localStorage on mount
   useEffect(() => {
@@ -145,7 +384,7 @@ export default function ARItemsManager() {
     }
   }
 
-  return (
+  return (<>
     <div className="flex flex-col h-full justify-between font-sans">
       <div className="space-y-4">
         {/* Header */}
@@ -170,6 +409,64 @@ export default function ARItemsManager() {
           <form onSubmit={handleAddItem} className="xl:col-span-5 bg-slate-900/60 border border-white/5 p-4.5 rounded-2xl space-y-3 flex flex-col justify-between">
             <div className="space-y-3">
               <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block border-b border-white/5 pb-1">รายละเอียดทั่วไป (General info)</span>
+
+              {/* Gemini AI Helper */}
+              <div className="bg-slate-950/80 border border-amber-500/20 rounded-xl p-3 space-y-2 relative overflow-hidden">
+                <div className="flex justify-between items-center">
+                  <span className="text-[9px] text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" /> ผู้ช่วยเขียนรายละเอียดด้วย AI Gemini
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowApiKeyInput(!showApiKeyInput)}
+                    className="text-[8px] text-slate-400 hover:text-white flex items-center gap-1 bg-white/5 px-2 py-1 rounded-md border border-white/5 transition"
+                  >
+                    <Key className="w-2.5 h-2.5" /> คีย์ Gemini
+                  </button>
+                </div>
+
+                {showApiKeyInput && (
+                  <div className="space-y-1">
+                    <input
+                      type="password"
+                      value={customApiKey}
+                      onChange={(e) => setCustomApiKey(e.target.value)}
+                      placeholder="ระบุ Gemini API Key (เช่น AIzaSy...)"
+                      className="w-full bg-slate-900 border border-white/5 rounded-lg px-2.5 py-1.5 text-[9px] font-mono text-slate-300 focus:outline-none focus:border-amber-500"
+                    />
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    placeholder="เช่น แก้วแชมเปญ, ช้อนตักซุป..."
+                    className="flex-grow bg-slate-900 border border-white/5 rounded-xl px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-amber-500"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleGenerateWithAI();
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleGenerateWithAI}
+                    disabled={isAiGenerating}
+                    className="bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-[10px] px-3 py-1.5 rounded-xl flex items-center gap-1 transition-all"
+                  >
+                    {isAiGenerating ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                    {isAiGenerating ? 'กำลังเจน...' : 'เจนด้วย AI'}
+                  </button>
+                </div>
+                {aiMessage && (
+                  <p className="text-[9px] text-amber-400/90 leading-snug">
+                    {aiMessage}
+                  </p>
+                )}
+              </div>
               
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
@@ -396,7 +693,7 @@ export default function ARItemsManager() {
 
                       {/* Small Live 3D Shape Preview Canvas */}
                       <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-950/80 border border-white/5 relative mb-3">
-                        <ARScene selectedItem={item.id} customShape={item.shape} />
+                        <ARScene selectedItem={item.id} itemTitle={item.title} customShape={item.shape} />
                         <div className="absolute top-2 left-2 bg-slate-900/80 px-2 py-0.5 rounded text-[8px] text-slate-400 border border-white/5 pointer-events-none">
                           3D Shape: {item.shape?.type} ({item.shape?.color})
                         </div>
@@ -410,12 +707,19 @@ export default function ARItemsManager() {
                     </div>
 
                     <div className="border-t border-white/5 pt-2 flex items-center justify-between text-[9px] text-slate-500">
-                      <span>ID: {item.id}</span>
-                      {item.quiz ? (
-                        <span className="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">Quiz Included</span>
-                      ) : (
-                        <span>No Quiz</span>
-                      )}
+                      <span className="truncate max-w-[80px]" title={item.id}>ID: {item.id.substring(0, 12)}…</span>
+                      <div className="flex items-center gap-1.5">
+                        {item.quiz && (
+                          <span className="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">Quiz ✓</span>
+                        )}
+                        <button
+                          onClick={() => setQrItem(item)}
+                          className="flex items-center gap-1 px-2 py-1 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 text-amber-400 rounded-md transition"
+                          title="สร้าง QR Code"
+                        >
+                          <QrCode className="w-3 h-3" /> QR
+                        </button>
+                      </div>
                     </div>
 
                   </div>
@@ -428,5 +732,9 @@ export default function ARItemsManager() {
 
       </div>
     </div>
+
+    {/* QR Code Modal */}
+    {qrItem && <QRModal item={qrItem} onClose={() => setQrItem(null)} />}
+  </>
   )
 }

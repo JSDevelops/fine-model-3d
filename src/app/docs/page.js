@@ -2,21 +2,21 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { 
-  ArrowLeft, 
-  BookOpen, 
-  Smartphone, 
-  GraduationCap, 
-  Shield, 
-  Check, 
-  ExternalLink, 
-  Key, 
-  FileText, 
-  Layers, 
-  Activity, 
-  Camera, 
-  Mic, 
-  Play, 
+import {
+  ArrowLeft,
+  BookOpen,
+  Smartphone,
+  GraduationCap,
+  Shield,
+  Check,
+  ExternalLink,
+  Key,
+  FileText,
+  Layers,
+  Activity,
+  Camera,
+  Mic,
+  Play,
   Database,
   Server,
   Info,
@@ -188,43 +188,43 @@ export default function DocsPage() {
               <h2 className="text-xl font-heading font-black text-white mt-1">1. ภาพรวมระบบ (System Overview)</h2>
               <p className="text-slate-400 mt-1">
                 FINE Model 3D AR+AI Platform เป็นนวัตกรรมสถาปัตยกรรมจำลองสถานการณ์การเรียนรู้เชิงลึก (Immersive Simulation System)
-                ที่สร้างขึ้นมาเพื่อยกระดับทักษะภาษาอังกฤษและการปฏิบัติตามมาตรฐานงานบริการในร้านอาหารและโรงแรม (Smart Hospitality Suite) 
-                ระบบบูรณาการร่วมกันระหว่าง **เทคโนโลยีความจริงเสริม (Augmented Reality - AR)**, **โมเดลปัญญาประดิษฐ์ประเมินเสียงสด (Gemini Multimodal Live API)**, 
+                ที่สร้างขึ้นมาเพื่อยกระดับทักษะภาษาอังกฤษและการปฏิบัติตามมาตรฐานงานบริการในร้านอาหารและโรงแรม (Smart Hospitality Suite)
+                ระบบบูรณาการร่วมกันระหว่าง **เทคโนโลยีความจริงเสริม (Augmented Reality - AR)**, **โมเดลปัญญาประดิษฐ์ประเมินเสียงสด (Gemini Multimodal Live API)**,
                 และ **สภาพแวดล้อม 3 มิติเชิงโต้ตอบ (Interactive 3D Workspace)**
               </p>
             </div>
 
             <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-3">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-white/5 pb-2">
-                <BookOpen className="w-4 h-4 text-amber-400" /> กรอบแนวคิดจำลองการสอน F-I-N-E Stages
+                <BookOpen className="w-4 h-4 text-amber-400" /> กรอบแนวคิดจำลองการสอน F-I-N-E Model 3D
               </h3>
               <ul className="space-y-2.5 text-slate-300">
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">F</span>
                   <div>
-                    <strong className="text-white font-semibold block">Familiarize (ขั้นสร้างความคุ้นเคยศัพท์และอุปกรณ์):</strong>
-                    นักเรียนเรียนรู้โครงสร้างและชื่อเรียกภาชนะผ่านการหมุนภาพ 3 มิติ และสแกนอุปกรณ์จริงในชีวิตประจำวันผ่านกล้องปัญญาประดิษฐ์เพื่อรับนิยาม
+                    <strong className="text-white font-semibold block">Familiarize (ขั้นสร้างความคุ้นเคย):</strong>
+                    นักเรียนเรียนรู้คำศัพท์สำนวน อุปกรณ์ เมนูอาหาร และบริบทงานบริการ และใช้ AI Scan วิเคราะห์วัตถุจริงเพื่อเรียนรู้ช้อมูลวิชาชีพ คำศัพพ์และบริบทงานบริการ ทำความเข้าใจด้านภาพ 3 มิติ ผ่านสื่อ AR เชื่อมโยงความรู้เดิมกับเนื้อหาใหม่
                   </div>
                 </li>
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">I</span>
                   <div>
-                    <strong className="text-white font-semibold block">Interact (ขั้นฝึกโต้ตอบสำเนียงภาษา):</strong>
-                    นักเรียนฝึกพูดประโยคการสื่อสารต้อนรับ แนะนำรายการอาหาร และเข้าเรียนสดผ่านสตรีมมิ่งสองทางร่วมกับอาจารย์ปัญญาประดิษฐ์แบบเสียงไมโครโฟนสดและกล้อง
+                    <strong className="text-white font-semibold block">Interact (การมีปฏิสัมพันธ์):</strong>
+                    นักเรียนฝึกสนทนาและโต้ตอบภาษาอังกฤษ จาก AI Suport และเปลีี่ยนความคิดเห็นและข้อเสนอแนะ
                   </div>
                 </li>
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">N</span>
                   <div>
-                    <strong className="text-white font-semibold block">Navigate (ขั้นการนำทางเผชิญด่านจำลอง):</strong>
-                    นักเรียนเดินแก้ปัญหาเฉพาะหน้าในร้านอาหารจำลอง 3 มิติ เช่น ลูกค้าตำหนิอาหารช้า หรือขอสลับเปลี่ยนโต๊ะ เพื่อประเมินคะแนนการบริการ
+                    <strong className="text-white font-semibold block">Navigate Service Situations(การฝึกปฏิบัติในสถานการณ์การบริการ):</strong>
+                    นักเรียนฝึกใช้ภาษาอังกฤษในการปฏิบัติงานบริการอาหารและเครื่องดื่ม แก้ไขปัญหาเฉพาะหน้าในสถานการณ์การบริการ ฝึกผ่าน Simulation ที่สมจริงและหลากหลาย
                   </div>
                 </li>
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">E</span>
                   <div>
-                    <strong className="text-white font-semibold block">Exhibit (ขั้นสะสมแฟ้มผลงานประเมิน):</strong>
-                    สรุปผลคะแนนทักษะจำแนกตามโครงสร้าง Rubrics หลักสูตร บันทึกข้อมูลเสียงสนทนาเพื่อออกแฟ้มสะสมผลงานรายบุคคลและออกใบประกาศรับรองสมรรถนะ
+                    <strong className="text-white font-semibold block">Exhibit Professional Performance (การแสดงสมรรถนะวิชาชีพ):</strong>
+                    แสดงสมรรถนะผ่านการปฏิบัติในสถานะการจริง ประเมินตามสภาพจริงด้วยเกณฑ์มาตรฐานวิชาชีพ รับข้อเสนอแนะเพื่อพัฒนาสมรรถนะอย่างต่อเนื่อง
                   </div>
                 </li>
               </ul>
@@ -266,7 +266,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Authorization & Security</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">2. บัญชีเข้าใช้งานระบบ (Simulation Credentials)</h2>
               <p className="text-slate-400 mt-1">
-                เพื่ออํานวยความสะดวกในการประเมินและทบทวนระบบจำลอง แพลตฟอร์มกำหนดระบบเข้าสู่ระบบแบบสวมบทบาทเสมือนจริง 
+                เพื่ออํานวยความสะดวกในการประเมินและทบทวนระบบจำลอง แพลตฟอร์มกำหนดระบบเข้าสู่ระบบแบบสวมบทบาทเสมือนจริง
                 โดยใช้อีเมลที่มีการจัดสรรสิทธิ์เฉพาะบทบาทไว้ในฐานข้อมูล โดยมีรายละเอียดบัญชีเข้าใช้งานดังตารางด้านล่างนี้
               </p>
             </div>
@@ -320,7 +320,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Student Access Flow</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">3. การเข้าใช้งานพอร์ทัลนักเรียน (Student Portal)</h2>
               <p className="text-slate-400 mt-1">
-                พอร์ทัลของนักเรียนได้รับการออกแบบให้เป็นหน้าจอจำลองแบบ **Mobile-First App** เพื่อความคล่องตัวในการเรียนรู้และสแกนกล้องเสมือนจริง 
+                พอร์ทัลของนักเรียนได้รับการออกแบบให้เป็นหน้าจอจำลองแบบ **Mobile-First App** เพื่อความคล่องตัวในการเรียนรู้และสแกนกล้องเสมือนจริง
                 โดยมีขั้นตอนการเข้าใช้หน้าจออย่างละเอียดดังนี้
               </p>
             </div>
@@ -360,43 +360,43 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Familiarize Phase Details</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">4. F - Familiarize (โฮโลแกรม 3D & AI Camera Scanner)</h2>
               <p className="text-slate-400 mt-1">
-                โมดูลสร้างความคุ้นเคยอุปกรณ์และคำศัพท์ของวิชาชีพบริการ แบ่งวิธีการฝึกฝนเชิงปฏิบัติจริงออกเป็น 2 ระบบย่อยดังนี้:
+                โมดูลสร้างความคุ้นเคย แบ่งวิธีการเรียนรู้ออกเป็น 2 โหมดการสแกนดังนี้:
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-3">
                 <h3 className="text-xs font-bold text-white flex items-center gap-1">
-                  <Layers className="w-4 h-4 text-amber-400" /> 1. ระบบเรียนรู้โมเดล 3D โฮโลแกรม
+                  <Layers className="w-4 h-4 text-amber-400" /> 1. ระบบสแกนด้วย QR Code (QR Scanner)
                 </h3>
                 <p className="text-slate-400 text-[11px]">
-                  ผู้เรียนสามารถสลับแท็บไปที่ **"3D Holograms"** เพื่อตรวจสอบภาชนะจัดโต๊ะจำลองแบบเรียลไทม์
+                  สแกนคิวอาร์โค้ดของอุปกรณ์ที่กำหนดโดยครูผู้สอน เพื่อเรียนรู้ตามแผนการจัดจานและงานบริการของแต่ละสัปดาห์
                 </p>
                 <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 text-[11px] space-y-2 text-slate-300">
                   <p><strong>วิธีการใช้งาน:</strong></p>
                   <ul className="list-disc pl-4 space-y-1">
-                    <li>คลิกเลือกอุปกรณ์ เช่น ถ้วยเอสเพรสโซ หรือขวดแชมเปญ</li>
-                    <li>ใช้เมาส์คลิกค้างแล้วลาก (หรือนิ้วปัดบนมือถือ) เพื่อหมุนอุปกรณ์ 3 มิติเชิงโต้ตอบ 360 องศา</li>
-                    <li>เลื่อนลูกกลิ้งเมาส์เพื่อซูมเข้า/ออก ดูความหนาและการจับอุปกรณ์</li>
-                    <li>คลิก **"ทำควิซทบทวนศัพท์"** เพื่อตอบคำถามประเมินศัพท์ที่สร้างโดยครูผู้สอน</li>
+                    <li>กดปุ่ม **"สแกน QR Code อุปกรณ์"** และเปิดกล้องระบบของเบราว์เซอร์</li>
+                    <li>ส่องกล้องไปที่ QR Code บนการ์ดอุปกรณ์ที่ครูแจกหรือแสดงขึ้นบอร์ด</li>
+                    <li>เมื่อพบอุปกรณ์ ระบบจะแสดงผลจำลองโมเดล 3D แบบโต้ตอบทันที</li>
+                    <li>หมุนอุปกรณ์ได้ 360 องศา ดูคำแปล ฟังเสียงอ่าน ทำแบบทดสอบศัพท์ และฝึกพูดประโยคบริการ</li>
                   </ul>
                 </div>
               </div>
 
               <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-3">
                 <h3 className="text-xs font-bold text-white flex items-center gap-1">
-                  <Camera className="w-4 h-4 text-cyan-400" /> 2. ระบบสแกนกล้อง Gemini AI Scanner
+                  <Camera className="w-4 h-4 text-cyan-400" /> 2. ระบบสแกนวิเคราะห์ด้วย AI (AI Scanner)
                 </h3>
                 <p className="text-slate-400 text-[11px]">
-                  ใช้เทคโนโลยีการประมวลผล Vision AI เพื่อช่วยให้นักเรียนระบุอุปกรณ์จานชามในสภาพแวดล้อมจริงได้
+                  สแกนถ่ายรูปวัตถุจริงใดๆ รอบตัว เพื่อให้ปัญญาประดิษฐ์ทำหน้าที่วิเคราะห์ศัพท์ คำแปล และสร้างโมเดลจำลอง 3D ทันที
                 </p>
                 <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 text-[11px] space-y-2 text-slate-300">
                   <p><strong>วิธีการใช้งาน:</strong></p>
                   <ul className="list-disc pl-4 space-y-1">
-                    <li>สลับแท็บเข้ากล้อง กดปุ่ม **"เปิดกล้องสแกนวัตถุ"** และอนุญาตสิทธิ์การใช้งานกล้องในหน้าจอ</li>
-                    <li>นำถ้วย แก้วน้ำ ช้อน หรืออุปกรณ์จริงรอบตัวมาจ่อหน้าเลนส์กล้อง</li>
-                    <li>กดปุ่มสีเหลืองทอง **"📸 ถ่ายภาพ & วิเคราะห์ด้วย AI"**</li>
-                    <li>ระบบจะส่งภาพ Base64 ไปวิเคราะห์กับ Gemini API และแสดงชื่อ หมวดหมู่ นิยาม และตัวอย่างบทพูดในงานโรงแรมให้ทันที</li>
+                    <li>กดปุ่ม **"สแกนวิเคราะห์ด้วย AI"** และอนุญาตสิทธิ์เข้าถึงกล้อง</li>
+                    <li>จัดวางตำแหน่งวัตถุ (เช่น ถ้วย แก้วน้ำ ช้อนส้อม) ให้อยู่กลางกรอบสแกน</li>
+                    <li>กดปุ่ม **"📸 ถ่ายภาพวิเคราะห์ด้วย AI"** เพื่อส่งรูปให้ Gemini API ประมวลผล</li>
+                    <li>ระบบจะส่งภาพ Base64 ไปยัง Gemini 2.5 Flash เพื่อแยกแยะ สร้างชื่อศัพท์ภาษาอังกฤษ คำแปลไทย นิยามการบริการ ประโยคสนทนาตัวอย่าง พร้อมสร้างรูปทรงโมเดล 3D และแบบทดสอบแบบไดนามิกขึ้นในหน้านั้นทันที</li>
                   </ul>
                 </div>
               </div>
@@ -407,9 +407,8 @@ export default function DocsPage() {
                 <Terminal className="w-3.5 h-3.5 text-amber-400" /> ข้อมูลการจัดเก็บข้อมูลหลังบ้าน (Technical Note)
               </h4>
               <p className="text-slate-400">
-                รายการโมเดล 3D ที่ปรากฏและปรับแต่งได้ทั้งหมดทำงานเชื่อมกับฐานข้อมูลจำลองแบบซิงค์เรียลไทม์ 
-                คีย์ที่ใช้บันทึกอาร์เรย์ของอุปกรณ์ทั้งหมดถูกเก็บใน Client Storage ภายใต้ชื่อคีย์ <code className="bg-black/40 px-1 py-0.5 rounded text-cyan-400 font-mono font-bold">fineverse_ar_items</code> 
-                ซึ่งสตรีมส่งมาจากแผงควบคุม 3D Items Manager ของฝั่งครู
+                รายการโมเดล 3D ที่ถูกเพิ่มหรือสร้างขึ้นผ่าน QR และ AI จะได้รับการอัปเดตและจำลองขึ้นในรูปแบบ Component 3D Dynamic
+                โดยโมเดลจากฝั่งครูที่พร้อมสแกนจะดึงข้อมูลผ่าน Client Local Storage ภายใต้ชื่อคีย์ <code className="bg-black/40 px-1 py-0.5 rounded text-cyan-400 font-mono font-bold">fineverse_ar_items</code>
               </p>
             </div>
           </div>
@@ -422,7 +421,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Interact Phase Details</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">5. I - Interact (การฝึกออกเสียง & Gemini Live Voice Coach)</h2>
               <p className="text-slate-400 mt-1">
-                โมดูลสําคัญในการพัฒนาทักษะภาษาอังกฤษเพื่อการสื่อสารระดับวิชาชีพโรงแรม (Speaking Competency Builder) 
+                โมดูลสําคัญในการพัฒนาทักษะภาษาอังกฤษเพื่อการสื่อสารระดับวิชาชีพโรงแรม (Speaking Competency Builder)
                 แบ่งโครงสร้างการฝึกฝนออกเป็นสองระดับตามความซับซ้อนของการใช้สื่อ:
               </p>
             </div>
@@ -469,11 +468,11 @@ export default function DocsPage() {
             <div className="bg-cyan-950/15 border border-cyan-500/20 p-4 rounded-2xl text-[11px] text-cyan-400 space-y-1">
               <strong className="text-white block font-heading font-black">⚙️ ข้อมูลการสตรีมมิ่งเสียงทางเทคนิค (Audio Stream Config)</strong>
               <p className="text-slate-400 leading-normal">
-                การเชื่อมต่อสตรีมมิ่งเสียงกับระบบ Gemini Live API ของแพลตฟอร์มใช้มาตรฐานเสียง: 
-                ฟอร์แมตข้อมูลดิบ <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">pyaudio.paInt16</code>, 
-                ช่องเสียง <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">1 Channel (Mono)</code>, 
-                อัตราสุ่มส่งเข้าประเมิน <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">16000Hz</code>, 
-                อัตราการสุ่มคืนเสียงสปีคเกอร์ <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">24000Hz</code> 
+                การเชื่อมต่อสตรีมมิ่งเสียงกับระบบ Gemini Live API ของแพลตฟอร์มใช้มาตรฐานเสียง:
+                ฟอร์แมตข้อมูลดิบ <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">pyaudio.paInt16</code>,
+                ช่องเสียง <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">1 Channel (Mono)</code>,
+                อัตราสุ่มส่งเข้าประเมิน <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">16000Hz</code>,
+                อัตราการสุ่มคืนเสียงสปีคเกอร์ <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">24000Hz</code>
                 และทำงานสตรีมผ่านเครือข่าย WebSockets ขนาดชุดละ <code className="bg-black/40 px-1 py-0.5 rounded text-white font-mono text-[10px]">1024 chunks</code> เพื่อการสื่อสารแบบ Real-time Latency ต่ำ
               </p>
             </div>
@@ -567,8 +566,8 @@ export default function DocsPage() {
                 <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 text-[11px] text-slate-300 space-y-1">
                   <p><strong>การออกใบรับรองความสามารถ (Certificate):</strong></p>
                   <p>
-                    เมื่อคะแนนเฉลี่ยรวมทุกสมรรถนะ KSA-C ผ่านเกณฑ์ **ร้อยละ 80** และผ่านเควสจำลองการตัดสินใจครบถ้วน 
-                    ปุ่มดาวน์โหลดประกาศนียบัตรวิชาชีพด้านการโรงแรมในระบบจะเปิดขึ้นโดยอัตโนมัติ 
+                    เมื่อคะแนนเฉลี่ยรวมทุกสมรรถนะ KSA-C ผ่านเกณฑ์ **ร้อยละ 80** และผ่านเควสจำลองการตัดสินใจครบถ้วน
+                    ปุ่มดาวน์โหลดประกาศนียบัตรวิชาชีพด้านการโรงแรมในระบบจะเปิดขึ้นโดยอัตโนมัติ
                     ช่วยให้นักเรียนดาวน์โหลดไฟล์รับรองดิจิทัลไปใช้ประกอบการทำงานได้
                   </p>
                 </div>
@@ -584,7 +583,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Teacher Curriculum Management</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">8. Lesson Plan Builder (จัดการแผนการเรียนการสอนสัปดาห์ CRUD)</h2>
               <p className="text-slate-400 mt-1">
-                แดชบอร์ดสําคัญสําหรับครูพิมพ์ใจในการบริหารการเรียนการสอนรายสัปดาห์ (สัปดาห์ที่ 1 - 18) 
+                แดชบอร์ดสําคัญสําหรับครูพิมพ์ใจในการบริหารการเรียนการสอนรายสัปดาห์ (สัปดาห์ที่ 1 - 18)
                 ช่วยให้สามารถปรับหลักสูตร F-I-N-E ได้อย่างยืดหยุ่นและบันทึกคงอยู่ถาวร
               </p>
             </div>
@@ -615,7 +614,7 @@ export default function DocsPage() {
                 </div>
                 <div className="bg-slate-950/50 p-2.5 rounded-xl border border-white/5">
                   <strong className="text-amber-400 block font-semibold">5. คืนค่าแผนการสอนมาตรฐาน (Reset to Defaults):</strong>
-                  ปุ่มสำหรับการกู้คืนข้อมูลแผนการสอนเริ่มต้นระดับสากล 4 สัปดาห์แรก (F-I-N-E stages) กรณีที่ครูผู้สอนลบหรือทำการเปลี่ยนทดสอบหลักสูตรแล้วต้องการกู้ข้อมูลด่วน
+                  ปุ่มสำหรับการกู้คืนข้อมูลแผนการสอนเริ่มต้นระดับสากล 4 สัปดาห์แรก (F-I-N-E Model 3D) กรณีที่ครูผู้สอนลบหรือทำการเปลี่ยนทดสอบหลักสูตรแล้วต้องการกู้ข้อมูลด่วน
                 </div>
               </div>
             </div>
@@ -629,7 +628,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">AI Conversational Control</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">9. AI Scenario Builder (ตัวสร้างโจทย์และคำสั่งบทเรียน AI)</h2>
               <p className="text-slate-400 mt-1">
-                ช่วยให้ครูผู้สอนปรับทัศนคติ พฤติกรรม และขอบเขตการพูดคุยของ AI Coach (อาจารย์ผู้สอนจำลอง) 
+                ช่วยให้ครูผู้สอนปรับทัศนคติ พฤติกรรม และขอบเขตการพูดคุยของ AI Coach (อาจารย์ผู้สอนจำลอง)
                 เพื่อกำหนดโจทย์สนทนาที่เหมาะสมในระดับทักษะต่าง ๆ ของนักเรียน
               </p>
             </div>
@@ -668,7 +667,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Class Learning Analytics</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">10. Class Analytics (วิเคราะห์ผลทักษะรายห้องเรียน)</h2>
               <p className="text-slate-400 mt-1">
-                โมดูลการประมวลสถิติผลสัมฤทธิ์ทางการเรียนรวมของห้องเรียนวิชาบริการโรงแรม 
+                โมดูลการประมวลสถิติผลสัมฤทธิ์ทางการเรียนรวมของห้องเรียนวิชาบริการโรงแรม
                 ช่วยให้ครูติดตามพัฒนาการรายบุคคลและภาพรวมชั้นเรียนได้อย่างใกล้ชิด
               </p>
             </div>
@@ -679,7 +678,7 @@ export default function DocsPage() {
                   <Activity className="w-4 h-4 text-cyan-400" /> แดชบอร์ดสรุปทักษะ KSA-C รวม
                 </h3>
                 <p className="text-slate-400 text-[11px]">
-                  แสดงผลเปอร์เซ็นต์อัตราการสอบผ่านเฉลี่ยในรูปแผนภูมิแท่งความก้าวหน้า 
+                  แสดงผลเปอร์เซ็นต์อัตราการสอบผ่านเฉลี่ยในรูปแผนภูมิแท่งความก้าวหน้า
                   สะท้อนข้อมูลค่าเกณฑ์เฉลี่ยผลลัพธ์ของนักเรียนในชั้นเรียนทุกคน
                 </p>
                 <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 text-[11px] space-y-1 text-slate-300 font-mono">
@@ -740,7 +739,7 @@ export default function DocsPage() {
               <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-2.5">
                 <h3 className="text-xs font-bold text-white">2. การจัดโครงสร้างรูบริกส์ประเมินสมรรถนะ</h3>
                 <p className="text-slate-400 text-[11px]">
-                  ครูระบุขีดจำกัดคะแนนรวม และการปรับสเกลเกณฑ์ตัดสินให้ผ่าน (เช่น 80% หรือ 24 คะแนนขึ้นไป) 
+                  ครูระบุขีดจำกัดคะแนนรวม และการปรับสเกลเกณฑ์ตัดสินให้ผ่าน (เช่น 80% หรือ 24 คะแนนขึ้นไป)
                   เพื่อนำไปใช้คำนวณสิทธิ์เปิดทำงานของปุ่มดาวน์โหลดใบประกาศของนักเรียนฝั่ง Exhibit
                 </p>
               </div>
@@ -755,7 +754,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">AR holograms design console</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">12. AR & 3D Items Manager (คลังและแผงออกแบบโฮโลแกรมครู)</h2>
               <p className="text-slate-400 mt-1">
-                ฟีเจอร์สำคัญสำหรับครูผู้สอนเพื่อใช้สร้าง ปรับแต่งรูปทรง และสตรีมโมเดล 3D ชิ้นใหม่ไปให้นักเรียนสแกนเรียนรู้แบบเรียลไทม์ 
+                ฟีเจอร์สำคัญสำหรับครูผู้สอนเพื่อใช้สร้าง ปรับแต่งรูปทรง และสตรีมโมเดล 3D ชิ้นใหม่ไปให้นักเรียนสแกนเรียนรู้แบบเรียลไทม์
                 ช่วยให้หลักสูตรมีความทันสมัยอยู่เสมอ
               </p>
             </div>
@@ -785,8 +784,8 @@ export default function DocsPage() {
               <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-2">
                 <h3 className="text-xs font-bold text-white">🎨 การกำหนดสีและรายละเอียดคำศัพท์ (Styling & Definitions)</h3>
                 <p className="text-slate-400 text-[11px]">
-                  ครูทำการระบุโค้ดสี HEX (เช่น <code className="text-amber-400">#d4af37</code> หรือป้อนค่าสีที่เลือก) เพื่อปรับสีของโมเดล Three.js 
-                  และป้อนชื่ออังกฤษ, คำอ่านสัทอักษร, นิยามไทย, วิธีใช้ และคำถามคำศัพท์ 
+                  ครูทำการระบุโค้ดสี HEX (เช่น <code className="text-amber-400">#d4af37</code> หรือป้อนค่าสีที่เลือก) เพื่อปรับสีของโมเดล Three.js
+                  และป้อนชื่ออังกฤษ, คำอ่านสัทอักษร, นิยามไทย, วิธีใช้ และคำถามคำศัพท์
                   เมื่อครูกดปุ่ม **"➕ บันทึกอุปกรณ์ลงคลัง 3D"** รายการอุปกรณ์ชิ้นใหม่จะถูกบรรจุลงในรายการ LocalStorage และนักเรียนสามารถเข้ามาศึกษาหมุนเล่นและทำควิซได้ทันที
                 </p>
               </div>
@@ -811,7 +810,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">System Flowchart & Technical Pipelines</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">13. แผนภาพแสดงการไหลเวียนข้อมูล (System Flowchart)</h2>
               <p className="text-slate-400 mt-1">
-                ผังโครงสร้างการแลกเปลี่ยนข้อมูลระหว่างแอปพลิเคชันฝั่งผู้ใช้งาน (Frontend) 
+                ผังโครงสร้างการแลกเปลี่ยนข้อมูลระหว่างแอปพลิเคชันฝั่งผู้ใช้งาน (Frontend)
                 กับระบบบริการหลังบ้าน (REST API Backend) และตารางข้อมูล MySQL
               </p>
             </div>
@@ -821,7 +820,7 @@ export default function DocsPage() {
                 <span className="font-bold text-white text-[11px]">ผังการแลกเปลี่ยนระดับสถาปัตยกรรม (Architectural Pipelines)</span>
                 <span className="text-[9px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full font-mono">WebSocket Supported</span>
               </div>
-              
+
               <div className="space-y-3 font-mono text-[10px]">
                 <div className="flex items-center justify-between bg-slate-900 border border-white/5 p-2 rounded-xl">
                   <span className="text-amber-400 font-bold">1. Frontend Layer (Next.js React)</span>
@@ -852,9 +851,9 @@ export default function DocsPage() {
             <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl text-[11px] space-y-2">
               <strong className="text-white block font-heading">💡 ระบบสำรองเก็บข้อมูล (State Caching System)</strong>
               <p className="text-slate-400 leading-normal">
-                เพื่อให้แอปพลิเคชันทำงานได้แบบ Offline-First และประหยัดทราฟฟิกหลังบ้านสำหรับการตรวจสอบ 
-                ข้อมูลแผนการเรียนสอน คลังโมเดล 3D และประวัติคะแนนของนักเรียน 
-                จะถูกจัดเก็บบันทึกสำรองผ่าน Client Caching (LocalStorage) ควบคู่กับฐานข้อมูลระบบหลัก 
+                เพื่อให้แอปพลิเคชันทำงานได้แบบ Offline-First และประหยัดทราฟฟิกหลังบ้านสำหรับการตรวจสอบ
+                ข้อมูลแผนการเรียนสอน คลังโมเดล 3D และประวัติคะแนนของนักเรียน
+                จะถูกจัดเก็บบันทึกสำรองผ่าน Client Caching (LocalStorage) ควบคู่กับฐานข้อมูลระบบหลัก
                 โดยสามารถกู้คืนหรือรีเซ็ตข้อมูลผ่านคอนโซลครูหรือแอดมินได้ตลอดเวลา
               </p>
             </div>
@@ -868,7 +867,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Access Rights Configuration</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">14. ระบบจัดการบทบาทและสิทธิ์ผู้ใช้งาน (Role & Access Control)</h2>
               <p className="text-slate-400 mt-1">
-                ความปลอดภัยและการสับเปลี่ยนสิทธิ์การเข้าถึงฟีเจอร์ต่างๆ ของระบบจำลองความพึงพอใจการเรียนรู้ 
+                ความปลอดภัยและการสับเปลี่ยนสิทธิ์การเข้าถึงฟีเจอร์ต่างๆ ของระบบจำลองความพึงพอใจการเรียนรู้
                 แอดมินควบคุมการเข้าใช้แยกส่วนผ่านแผง Operator Control Panel
               </p>
             </div>
@@ -897,13 +896,13 @@ export default function DocsPage() {
                     <span className="text-emerald-400">Enabled (เปิดใช้งาน)</span>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-2">อนุญาตให้เข้าเรียนรายสัปดาห์, ใช้กล้อง AR 3D Scanner, และเชื่อม Live API คลื่นเสียง</p>
-                  
+
                   <div className="flex justify-between border-t border-white/5 pt-2">
                     <strong>สิทธิ์ฝั่งครู (Teacher App Toggles):</strong>
                     <span className="text-emerald-400">Enabled (เปิดใช้งาน)</span>
                   </div>
                   <p className="text-[10px] text-slate-400 mb-2">อนุญาตให้ออกแบบบทเรียนสัปดาห์ CRUD, กำหนดเกณฑ์รูบริก และจัดการคลังโมเดล 3D</p>
-                  
+
                   <div className="flex justify-between border-t border-white/5 pt-2">
                     <strong>ระบบจัดการความปลอดภัยหลังบ้าน (Admin System Backup):</strong>
                     <span className="text-rose-400">Admin Only (แอดมินเท่านั้น)</span>
@@ -932,11 +931,10 @@ export default function DocsPage() {
                 <button
                   key={key}
                   onClick={() => setActiveDbTable(key)}
-                  className={`px-2.5 py-1.5 text-[9px] font-bold rounded-lg transition-all ${
-                    activeDbTable === key
-                      ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
+                  className={`px-2.5 py-1.5 text-[9px] font-bold rounded-lg transition-all ${activeDbTable === key
+                    ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
+                    : 'text-slate-400 hover:text-white'
+                    }`}
                 >
                   tb_{key}
                 </button>
@@ -1063,7 +1061,7 @@ export default function DocsPage() {
 
       {/* Main Layout wrapper */}
       <div className="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full px-6 py-8 gap-6 relative z-10 items-stretch">
-        
+
         {/* Left Sidebar Menu */}
         <aside className="w-full md:w-64 shrink-0">
           <div className="bg-[#151D2F]/40 border border-white/5 p-4 rounded-3xl backdrop-blur-md sticky top-24 space-y-5">
@@ -1071,7 +1069,7 @@ export default function DocsPage() {
               <BookOpen className="w-5 h-5 text-amber-400" />
               <h3 className="font-heading font-black text-xs text-white uppercase tracking-wider">สารบัญคู่มือ</h3>
             </div>
-            
+
             <nav className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
               {groups.map((group, groupIdx) => (
                 <div key={groupIdx} className="space-y-1">
@@ -1086,11 +1084,10 @@ export default function DocsPage() {
                         <button
                           key={item.id}
                           onClick={() => setActiveSection(item.id)}
-                          className={`w-full text-left px-2.5 py-1.5 rounded-xl text-[10px] transition-all flex items-center gap-2 border ${
-                            isActive
-                              ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 font-bold'
-                              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border-transparent'
-                          }`}
+                          className={`w-full text-left px-2.5 py-1.5 rounded-xl text-[10px] transition-all flex items-center gap-2 border ${isActive
+                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 font-bold'
+                            : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border-transparent'
+                            }`}
                         >
                           <IconComponent className="w-3.5 h-3.5 shrink-0" />
                           <span className="truncate">{item.label}</span>
@@ -1108,7 +1105,7 @@ export default function DocsPage() {
         <main className="flex-grow bg-[#151D2F]/20 border border-white/5 p-6 md:p-8 rounded-3xl backdrop-blur-md min-h-[500px]">
           {renderContent()}
         </main>
-        
+
       </div>
 
       {/* Footer */}

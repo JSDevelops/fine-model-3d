@@ -99,7 +99,7 @@ export default function Interact({ onSaveScore }) {
   const currentPrompt = prompts[selectedPromptIdx]
 
   // Live Mode State
-  const [customApiKey, setCustomApiKey] = useState('')
+  const [customApiKey, setCustomApiKey] = useState('AIzaSyAkk92tJrfj-f5R40wPyHIRquBK1qdCIdE')
   const [showApiKeyInput, setShowApiKeyInput] = useState(false)
   const [liveStatus, setLiveStatus] = useState('disconnected') // 'disconnected' | 'connecting' | 'connected'
   const [liveCamera, setLiveCamera] = useState(false)
@@ -267,7 +267,7 @@ export default function Interact({ onSaveScore }) {
       nextAudioStartTimeRef.current = 0
 
       // Connect WebSocket
-      const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidirectionalGenerateContent?key=${apiKey}`
+      const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`
       const ws = new WebSocket(wsUrl)
       socketRef.current = ws
 
@@ -798,12 +798,6 @@ export default function Interact({ onSaveScore }) {
                   {liveStatus === 'connected' ? <Wifi className="w-3 h-3" /> : <WifiOff className="w-3 h-3" />}
                   {liveStatus === 'connected' ? 'LIVE CONNECTED' : 'DISCONNECTED'}
                 </span>
-                <button
-                  onClick={() => setShowApiKeyInput(!showApiKeyInput)}
-                  className="text-slate-400 hover:text-white"
-                >
-                  <Key className="w-3.5 h-3.5" />
-                </button>
               </div>
 
               <div className="flex gap-1.5 mt-2">
@@ -835,19 +829,7 @@ export default function Interact({ onSaveScore }) {
             </div>
           </div>
 
-          {/* Custom API Key input container */}
-          {showApiKeyInput && (
-            <div className="mt-2 p-2.5 bg-slate-950/90 border border-amber-500/30 rounded-xl space-y-1 shrink-0">
-              <label className="text-[8px] uppercase tracking-wider text-[#d4af37] font-bold block">ระบุ Gemini API Key (มีระบบจำลองโต้ตอบหากไม่มีคีย์)</label>
-              <input
-                type="password"
-                value={customApiKey}
-                onChange={(e) => setCustomApiKey(e.target.value)}
-                placeholder="AIzaSy..."
-                className="w-full bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-[8px] font-mono text-slate-300 focus:outline-none focus:border-amber-500"
-              />
-            </div>
-          )}
+          {/* Custom API Key input hidden */}
 
           {/* System logs console */}
           <div className="mt-2 bg-slate-950 border border-white/5 rounded-xl p-2 max-h-[50px] overflow-y-auto font-mono text-[8px] text-slate-400 shrink-0">
