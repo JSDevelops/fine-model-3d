@@ -202,7 +202,7 @@ export default function DocsPage() {
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">F</span>
                   <div>
-                    <strong className="text-white font-semibold block">Familiarize (ขั้นสร้างความคุ้นเคย):</strong>
+                    <strong className="text-white font-semibold block">Familiarize (สร้างความคุ้นเคย):</strong>
                     นักเรียนเรียนรู้คำศัพท์สำนวน อุปกรณ์ เมนูอาหาร และบริบทงานบริการ และใช้ AI Scan วิเคราะห์วัตถุจริงเพื่อเรียนรู้ช้อมูลวิชาชีพ คำศัพพ์และบริบทงานบริการ ทำความเข้าใจด้านภาพ 3 มิติ ผ่านสื่อ AR เชื่อมโยงความรู้เดิมกับเนื้อหาใหม่
                   </div>
                 </li>
