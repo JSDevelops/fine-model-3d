@@ -255,7 +255,7 @@ export default function LessonBuilder() {
 
         {/* FINE Stages Config */}
         <div className="space-y-2 max-h-[165px] overflow-y-auto pr-1">
-          <label className="text-[9px] uppercase text-slate-500 font-bold block">กำหนดกิจกรรมสี่ขั้นตอน (FINE Model Stages)</label>
+          <label className="text-[9px] uppercase text-slate-500 font-bold block">กำหนดกิจกรรมสี่ขั้นตอน (FINE Model)</label>
           {Object.keys(currentLesson.stages).map((key) => {
             const stage = currentLesson.stages[key]
             return (
