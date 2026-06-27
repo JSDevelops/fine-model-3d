@@ -196,7 +196,7 @@ export default function DocsPage() {
 
             <div className="bg-[#151D2F]/60 border border-white/5 p-4 rounded-2xl space-y-3">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-white/5 pb-2">
-                <BookOpen className="w-4 h-4 text-amber-400" /> กรอบแนวคิดจำลองการสอน F-I-N-E Model 3D
+                <BookOpen className="w-4 h-4 text-amber-400" /> กรอบแนวคิดจำลองการสอน F-I-N-E MODEL
               </h3>
               <ul className="space-y-2.5 text-slate-300">
                 <li className="flex gap-2">
