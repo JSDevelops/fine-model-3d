@@ -203,14 +203,14 @@ export default function DocsPage() {
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">F</span>
                   <div>
                     <strong className="text-white font-semibold block">Familiarize (สร้างความคุ้นเคย):</strong>
-                    นักเรียนเรียนรู้คำศัพท์สำนวน อุปกรณ์ เมนูอาหาร และบริบทงานบริการ และใช้ AI Scan วิเคราะห์วัตถุจริงเพื่อเรียนรู้ช้อมูลวิชาชีพ คำศัพพ์และบริบทงานบริการ ทำความเข้าใจด้านภาพ 3 มิติ ผ่านสื่อ AR เชื่อมโยงความรู้เดิมกับเนื้อหาใหม่
+                    นักเรียนเรียนรู้คำศัพท์สำนวน อุปกรณ์ เมนูอาหาร และบริบทงานบริการ และใช้ AI Scan วิเคราะห์วัตถุจริงเพื่อเรียนรู้ข้อมูลวิชาชีพ คำศัพท์และบริบทงานบริการ ทำความเข้าใจด้านภาพ 3 มิติ ผ่านสื่อ AR เชื่อมโยงความรู้เดิมกับเนื้อหาใหม่
                   </div>
                 </li>
                 <li className="flex gap-2">
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">I</span>
                   <div>
                     <strong className="text-white font-semibold block">Interact (การมีปฏิสัมพันธ์):</strong>
-                    นักเรียนฝึกสนทนาและโต้ตอบภาษาอังกฤษ จาก AI Suport และเปลีี่ยนความคิดเห็นและข้อเสนอแนะ
+                    นักเรียนฝึกสนทนาและโต้ตอบภาษาอังกฤษ จาก AI Support และเปลี่ยนความคิดเห็นและข้อเสนอแนะ
                   </div>
                 </li>
                 <li className="flex gap-2">
@@ -224,7 +224,7 @@ export default function DocsPage() {
                   <span className="w-5 h-5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-[10px] shrink-0">E</span>
                   <div>
                     <strong className="text-white font-semibold block">Exhibit Professional Performance (การแสดงสมรรถนะวิชาชีพ):</strong>
-                    แสดงสมรรถนะผ่านการปฏิบัติในสถานะการจริง ประเมินตามสภาพจริงด้วยเกณฑ์มาตรฐานวิชาชีพ รับข้อเสนอแนะเพื่อพัฒนาสมรรถนะอย่างต่อเนื่อง
+                    แสดงสมรรถนะผ่านการปฏิบัติในสถานการณ์จริง ประเมินตามสภาพจริงด้วยเกณฑ์มาตรฐานวิชาชีพ รับข้อเสนอแนะเพื่อพัฒนาสมรรถนะอย่างต่อเนื่อง
                   </div>
                 </li>
               </ul>
@@ -486,7 +486,7 @@ export default function DocsPage() {
               <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest block font-mono">Navigate Phase Details</span>
               <h2 className="text-xl font-heading font-black text-white mt-1">6. N - Navigate (ด่านสวมบทบาทแก้ปัญหา 3D)</h2>
               <p className="text-slate-400 mt-1">
-                การนำทักษะด้านความรู้คำศัพท์ (F) และการพูดโต้ตอบ (I) มาทดสอบในสถานการณ์จำลองการทำงานจริงในร้านอาหารหรูจำลองมิติ
+                การนำทักษะด้านความรู้คำศัพท์ (F) และการพูดโต้ตอบ (I) มาทดสอบในสถานการณ์จำลองการทำงานจริงในร้านอาหารหรูจำลอง 3 มิติ
               </p>
             </div>
 
@@ -598,7 +598,7 @@ export default function DocsPage() {
               <div className="space-y-2 text-[11px]">
                 <div className="bg-slate-950/50 p-2.5 rounded-xl border border-white/5">
                   <strong className="text-white block font-semibold">1. แถบเลือกสัปดาห์ (Read):</strong>
-                  ครูกดเลือกแถบปุ่มสัปดาห์ 1 - 18 ด้านบน หน้าจอจะโหลดหัวข้อบทเรียน วัตถุประสงค์สติกมา และรายละเอียดแผนของสัปดาห์นั้นขึ้นมาแสดงในตัวแก้ไขทันที
+                  ครูกดเลือกแถบปุ่มสัปดาห์ 1 - 18 ด้านบน หน้าจอจะโหลดหัวข้อบทเรียน วัตถุประสงค์การเรียนรู้ และรายละเอียดแผนของสัปดาห์นั้นขึ้นมาแสดงในตัวแก้ไขทันที
                 </div>
                 <div className="bg-slate-950/50 p-2.5 rounded-xl border border-white/5">
                   <strong className="text-white block font-semibold">2. การอัปเดตและบันทึกข้อมูล (Update):</strong>
